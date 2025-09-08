@@ -1,0 +1,91 @@
+@use "../style/abstract/mixin.scss" as *;
+@use "./abstract/font.scss" as *;
+@use "./abstract/colors.scss" as *;
+
+.workout-card {
+  background: linear-gradient(rgba(2, 18, 33, 0.592) 10%, #062c4e89 100%);
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+  width: 80%;
+  input {
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .workout-title {
+    margin-bottom: 20px;
+    margin-top: 0;
+    font-size: 15px;
+  }
+
+  .card-head-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .app-btn {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: $blue;
+    margin-top: 10px;
+    width: 100%;
+    font-family: $app-type;
+    font-weight: bold;
+    color: $dark-blue;
+  }
+
+  .exercise-data {
+    display: flex;
+    flex-direction: column;
+
+    .workout-exercise-list {
+      display: flex;
+      flex-direction: column;
+      margin: 20px;
+      li {
+        font-weight: bold;
+        font-size: 15px;
+        color: white;
+      }
+      .exercise-inputs {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+      }
+      .exercise-summary {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .exercise-property {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin: 10px;
+      }
+    }
+  }
+
+  .workout-history {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+    align-items: center;
+    p {
+      font-weight: bold;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+    li {
+      list-style: inside;
+      font-size: 10px;
+      color: white;
+    }
+  }
+}
