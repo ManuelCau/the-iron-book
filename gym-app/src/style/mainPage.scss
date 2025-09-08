@@ -1,0 +1,40 @@
+@use "../style/abstract/mixin.scss" as *;
+@use "./abstract/font.scss" as *;
+@use "./abstract/colors.scss" as *;
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: $blue;
+  font-family: $app-type;
+
+  .logo {
+    width: 200px;
+  }
+  p {
+    color: white;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+  }
+  .new-workout-btn {
+    display: flex;
+    margin: 50px;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    justify-content: center;
+    border-radius: 10px;
+    border-color: $blue;
+    background-color: rgba(128, 128, 128, 0.715);
+    color: $blue;
+  }
+  @include respond-to(mobile) {
+    padding: 8px 16px;
+    font-size: 18px;
+
+    p {
+      font-size: 25px;
+    }
+  }
+}
