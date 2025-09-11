@@ -1,11 +1,12 @@
-@use "../style/abstract/mixin.scss" as *;
-@use "./abstract/font.scss" as *;
-@use "./abstract/colors.scss" as *;
+@use "../../style/mixin.scss" as *;
+@use "../../style/font.scss" as *;
+@use "../../style/colors.scss" as *;
 
 .new-workout-card {
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
 
   .form-inputs {
     display: flex;
@@ -38,12 +39,12 @@
   }
   .submit-btn {
     padding: 10px;
-    background-color: $blue;
+    background-color: $primary-color;
     border-radius: 10px;
     border-color: transparent;
     margin: 10px;
     font-weight: bold;
-    color: $dark-blue;
+    color: $secondary-color;
     font-family: $app-type;
   }
   .workout-list {
@@ -60,6 +61,17 @@
     }
     li {
       list-style: none;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      button {
+        padding: 5px;
+        background-color: white;
+        font-weight: bold;
+        font-family: $app-type;
+        border-radius: 10px;
+        border-color: transparent;
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
-@forward "./style/mainPage.scss";
-@forward "./style/newWorkout.scss";
-@forward "./style/workoutCards.scss";
+@forward "../src/components/main-page/mainPage.scss";
+@forward "../src/components/new-workout/newWorkout.scss";
+@forward "../src/components/workout-card/workoutCards.scss";
 
 * {
   margin: 0;
