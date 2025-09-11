@@ -2,7 +2,8 @@ export type Exercise = {
   id: number;
   name: string;
   sets: number;
-  reps: number;
+  time?: number;
+  reps?: number;
   kg?: number;
   rest: number;
 };

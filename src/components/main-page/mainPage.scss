@@ -1,11 +1,11 @@
-@use "../style/abstract/mixin.scss" as *;
-@use "./abstract/font.scss" as *;
-@use "./abstract/colors.scss" as *;
+@use "../../style/mixin.scss" as *;
+@use "../../style/font.scss" as *;
+@use "../../style/colors.scss" as *;
 .mainPage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: $blue;
+  color: $primary-color;
   font-family: $app-type;
 
   .logo {
@@ -16,18 +16,23 @@
     font-size: 40px;
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
   }
   .new-workout-btn {
     display: flex;
+    flex-direction: column;
     margin: 50px;
+    gap: 10px;
     align-items: center;
-    width: 80px;
-    height: 80px;
-    justify-content: center;
-    border-radius: 10px;
-    border-color: $blue;
-    background-color: rgba(128, 128, 128, 0.715);
-    color: $blue;
+    button {
+      width: 80px;
+      height: 80px;
+      justify-content: center;
+      border-radius: 10px;
+      border-color: $primary-color;
+      background-color: rgba(128, 128, 128, 0.715);
+      color: $primary-color;
+    }
   }
   @include respond-to(mobile) {
     padding: 8px 16px;

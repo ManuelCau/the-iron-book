@@ -1,0 +1,136 @@
+@use "../../style/mixin.scss" as *;
+@use "../../style/font.scss" as *;
+@use "../../style/colors.scss" as *;
+
+.workout-card {
+  background: linear-gradient(rgba(2, 18, 33, 0.592) 10%, #062c4e89 100%);
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+  width: 80%;
+
+  .exercise-form {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+
+    .exercise-property {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      label {
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+
+        margin-bottom: 10px;
+      }
+      input {
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        margin-bottom: 10px;
+        width: 60%;
+      }
+    }
+  }
+
+  .workout-title {
+    margin: 10px 0 20px;
+    p {
+      font-size: 15px;
+    }
+  }
+
+  .card-head-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .app-btn {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: $primary-color;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-family: $app-type;
+    font-weight: bold;
+    color: $secondary-color;
+  }
+
+  /* SEZIONE ESERCIZI */
+  .exercise-card {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+
+    .workout-exercise-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+  }
+
+  /* BOTTONI & STORICO */
+  .history-button {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    margin-top: 10px;
+    width: 100%;
+    font-family: $app-type;
+    font-weight: bold;
+    color: $secondary-color;
+  }
+
+  .workout-history {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+    align-items: center;
+
+    p {
+      font-weight: bold;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    li {
+      list-style: inside;
+      font-size: 12px;
+      color: white;
+    }
+  }
+}
+.timer {
+  display: flex;
+  flex-direction: column;
+  p {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+}
+
+/* NAVIGAZIONE ESERCIZI */
+.exercise-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+
+  button {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    font-family: $app-type;
+    font-weight: bold;
+    color: $secondary-color;
+  }
+}

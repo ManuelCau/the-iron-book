@@ -4,12 +4,12 @@ type TimerProps = { initialRest: number };
 
 export function Timer({ initialRest }: TimerProps) {
   const [initialTime, setInitialTime] = useState(initialRest * 60);
-  const [startTimer, setStartTimer] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    if (!startTimer) return;
+    if (!isRunning) return;
     if (initialTime <= 0) {
-      setStartTimer(false);
+      setIsRunning(false);
       setInitialTime(initialRest);
       return;
     }
@@ -19,15 +19,15 @@ export function Timer({ initialRest }: TimerProps) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [startTimer, initialTime]);
+  }, [isRunning, initialTime]);
 
   function HandleStartTimer() {
-    if (startTimer) {
+    if (isRunning) {
       setInitialTime(initialRest * 60);
-      setStartTimer(false);
+      setIsRunning(false);
     } else {
       setInitialTime(initialRest * 60);
-      setStartTimer(true);
+      setIsRunning(true);
     }
   }
 
@@ -36,9 +36,9 @@ export function Timer({ initialRest }: TimerProps) {
   return (
     <>
       <button className="app-btn" onClick={HandleStartTimer}>
-        {startTimer
+        {isRunning
           ? `Time left: ${minutes}:${seconds.toString().padStart(2, "0")}`
-          : `Start rest: ${initialRest} min`}
+          : `Start: ${initialRest} min`}
       </button>
     </>
   );
