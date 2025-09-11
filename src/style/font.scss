@@ -1,6 +1,8 @@
 @font-face {
-  font-family: Michroma;
-  src: url(../../assets/font/Michroma-Regular.ttf);
+  font-family: "Michroma";
+  src: url("/font/Michroma-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 $app-type: "Michroma", sans-serif;

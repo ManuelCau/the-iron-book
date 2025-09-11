@@ -1,15 +1,18 @@
 @forward "../src/components/main-page/mainPage.scss";
 @forward "../src/components/new-workout/newWorkout.scss";
 @forward "../src/components/workout-card/workoutCards.scss";
+@use "../src/style/font.scss" as *;
 
 * {
   margin: 0;
   padding: 0;
 }
+
 html,
 body {
   width: 100%;
   height: 100vh;
   background: linear-gradient(rgb(1, 22, 41) 10%, #000000 100%);
   background-attachment: fixed;
+  font-family: $app-type;
 }
