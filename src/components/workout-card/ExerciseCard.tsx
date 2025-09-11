@@ -39,13 +39,13 @@ export function ExerciseCard({ exerciseData, setExerciseData }: Props) {
         {isWeight && (
           <p>
             {currentExercise.sets} x {currentExercise.reps} — Rest:{" "}
-            {currentExercise.rest}s
+            {currentExercise.rest}
           </p>
         )}
 
         {isCardio && (
           <p>
-            Time: {currentExercise.time}s — Rest: {currentExercise.rest}s
+            Time: {currentExercise.time}s — Rest: {currentExercise.rest}
           </p>
         )}
 
