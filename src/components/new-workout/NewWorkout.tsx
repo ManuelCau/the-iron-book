@@ -1,96 +1,143 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, type JSX } from "react";
 import type { Workout } from "../../types";
-import { NewWeightExercise } from "../create-new-exercise/NewWeightExercise";
-import { NewCardioExercise } from "../create-new-exercise/NewCardioExercise";
+import { NewWeightExercise } from "./create-new-exercise/NewWeightExercise";
+import { NewCardioExercise } from "./create-new-exercise/NewCardioExercise";
+import { SelectWorkoutType } from "./create-new-exercise/SelectWorkoutType";
+import { WorkoutName } from "./create-new-exercise/WorkoutName";
 
 type Props = {
   onAddedWorkout: (workout: Workout) => void;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowWorkouts: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export function NewWorkout({ onAddedWorkout, setShowForm }: Props) {
+type Step = "name" | "type" | "weight" | "cardio" | "summary";
+
+export function NewWorkout({
+  onAddedWorkout,
+  setShowForm,
+  setShowWorkouts,
+}: Props) {
   const [workout, setWorkout] = useState<Workout>({
     id: Date.now(),
     title: "",
     exercises: [],
   });
-  const [showWeightExerciseForm, setShowWeightExerciseForm] = useState(false);
-  const [showCardioExerciseForm, setShowCardioExerciseForm] = useState(false);
+  const [step, setStep] = useState<Step>("name");
 
-  function handleWorkoutChange(
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    setWorkout({
-      ...workout,
-      [e.target.name]: e.target.value,
-    });
-  }
+  const prevStep: Record<Step, Step | null> = {
+    name: null,
+    type: "name",
+    weight: "type",
+    cardio: "type",
+    summary: "type",
+  };
 
-  function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+  const handleBack = () => {
+    if (prevStep[step]) setStep(prevStep[step]!);
+    else {
+      if (window.confirm("Are you sure you want to cancel this workout?")) {
+        setShowForm(false);
+      }
+    }
+  };
+
+  const handleSubmit = () => {
     onAddedWorkout(workout);
     setWorkout({ id: Date.now(), title: "", exercises: [] });
-    setShowWeightExerciseForm(false);
-    setShowCardioExerciseForm(false);
+    setStep("name");
     setShowForm(false);
-  }
+    setShowWorkouts(true);
+  };
 
-  function handleDeleteExercise(id: number) {
-    setWorkout({
-      ...workout,
-      exercises: workout.exercises.filter((e) => e.id !== id),
-    });
-  }
+  const steps: Record<Step, JSX.Element> = {
+    name: (
+      <WorkoutName
+        workout={workout}
+        handleWorkoutChange={(e) =>
+          setWorkout({ ...workout, [e.target.name]: e.target.value })
+        }
+        nextStep={() => setStep("type")}
+        handleBack={handleBack}
+      />
+    ),
+    type: (
+      <div>
+        <SelectWorkoutType
+          workout={workout}
+          setWorkout={setWorkout}
+          setStep={setStep}
+        />
+        {workout.exercises.length > 0 && (
+          <div className="workout-list">
+            <div className="navigation-buttons">
+              <button onClick={handleBack} className="go-back-btn">
+                Back
+              </button>
+              {workout.exercises.length > 0 && (
+                <button onClick={() => setStep("summary")} className="next-btn">
+                  Next
+                </button>
+              )}
+            </div>
+            <ul>
+              {workout.exercises.map((ex) => (
+                <li key={ex.id}>
+                  {ex.name} –{" "}
+                  {ex.time
+                    ? `${ex.sets} x ${ex.time} min`
+                    : `${ex.sets} x ${ex.reps} reps`}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    ),
+    weight: (
+      <NewWeightExercise
+        workout={workout}
+        setWorkout={setWorkout}
+        prevStep={() => setStep("type")}
+      />
+    ),
+    cardio: (
+      <NewCardioExercise
+        workout={workout}
+        setWorkout={setWorkout}
+        prevStep={() => setStep("type")}
+      />
+    ),
+    summary: (
+      <div className="workout-list">
+        <p>{workout.title}</p>
+        <p>Summary:</p>
+        <ul>
+          {workout.exercises.map((ex) => (
+            <li key={ex.id}>
+              {ex.name} –{" "}
+              {ex.time
+                ? `${ex.sets} x ${ex.time} min`
+                : `${ex.sets} x ${ex.reps} reps`}
+            </li>
+          ))}
+        </ul>
+        <div className="navigation-buttons">
+          <button className="go-back-btn" onClick={handleBack}>
+            Back
+          </button>
+          <button className="save-btn" onClick={handleSubmit}>
+            Save Workout
+          </button>
+        </div>
+      </div>
+    ),
+  };
 
   return (
     <div className="new-workout-card">
       <p>NEW WORKOUT</p>
-      <div className="form-inputs">
-        <label> Workout name </label>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={workout.title}
-          onChange={handleWorkoutChange}
-        />
-      </div>
-
-      <button
-        className="submit-btn"
-        onClick={() => setShowWeightExerciseForm(!showWeightExerciseForm)}
-      >
-        New exercise
-      </button>
-      {showWeightExerciseForm && (
-        <NewWeightExercise workout={workout} setWorkout={setWorkout} />
-      )}
-
-      <button
-        className="submit-btn"
-        onClick={() => setShowCardioExerciseForm(!showCardioExerciseForm)}
-      >
-        New Cardio
-      </button>
-      {showCardioExerciseForm && (
-        <NewCardioExercise workout={workout} setWorkout={setWorkout} />
-      )}
-
-      <div className="workout-list">
-        <ul>
-          {workout.exercises.map((ex) => (
-            <li key={ex.id}>
-              <div>
-                {ex.name} - {ex.sets} X {ex.reps}
-              </div>
-              <button onClick={() => handleDeleteExercise(ex.id)}>X</button>
-            </li>
-          ))}
-        </ul>
-        <button className="submit-btn" onClick={handleSubmit}>
-          Let's go!
-        </button>
-      </div>
+      {steps[step]}
     </div>
   );
 }

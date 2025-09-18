@@ -1,0 +1,58 @@
+@use "../../../style/mixin.scss" as *;
+@use "../../../style/font.scss" as *;
+@use "../../../style/colors.scss" as *;
+
+.workout-name {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  .form-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    label {
+      font-size: 10px;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 100%;
+      display: flex;
+      padding: 10px;
+      border-radius: 10px;
+      border-color: transparent;
+    }
+  }
+
+  .buttons-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .back-button {
+      display: flex;
+      border-radius: 10px;
+      border-color: transparent;
+      background-color: $negative-action;
+      color: white;
+      font-family: $app-type;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 20px;
+    }
+
+    .next-button {
+      display: flex;
+      border-radius: 10px;
+      border-color: transparent;
+      background-color: $primary-color;
+      font-family: $app-type;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 15px;
+    }
+  }
+}

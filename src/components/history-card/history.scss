@@ -1,0 +1,28 @@
+.exercise-history {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  h6 {
+    color: white;
+    margin-bottom: 10px;
+  }
+  p {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    li {
+      list-style: inside;
+      font-size: 9px;
+      color: white;
+    }
+  }
+}
