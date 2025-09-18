@@ -1,0 +1,16 @@
+@use "../../style/mixin.scss" as *;
+@use "../../style/font.scss" as *;
+@use "../../style/colors.scss" as *;
+
+.timer {
+  padding: 10px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: transparent;
+  border: none;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset;
+  font-family: $app-type;
+  font-weight: bold;
+  color: white;
+  font-size: 50px;
+}

@@ -2,76 +2,84 @@
 @use "../../style/font.scss" as *;
 @use "../../style/colors.scss" as *;
 
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+  p {
+    color: $primary-color;
+  }
+  ul {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  li {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 10px;
+    color: white;
+    button {
+      padding: 5px;
+      background-color: white;
+      font-weight: bold;
+      font-family: $app-type;
+      border-radius: 10px;
+      border-color: transparent;
+    }
+  }
+}
+
 .new-workout-card {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-
-  .form-inputs {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-direction: column;
-
-    label {
-      font-size: 15px;
-      margin-top: 10px;
-    }
-
-    input {
-      background-color: rgba(228, 220, 220, 0.766);
-      padding: 10px;
-      border-radius: 15px;
-      width: 100%;
-    }
-
-    .execution {
-      display: flex;
-      flex-direction: row;
-      gap: 8px;
-
-      input {
-        width: 80px;
-        text-align: center;
-      }
-    }
+  margin-top: 40px;
+  p {
+    margin-bottom: 20px;
   }
-  .submit-btn {
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  .go-back-btn {
+    padding: 10px;
+    background-color: $negative-action;
+    border-radius: 10px;
+    border-color: transparent;
+    margin: 5px;
+
+    font-weight: bold;
+    color: white;
+    font-family: $app-type;
+  }
+  .save-btn {
+    padding: 10px;
+    background-color: $positive-action;
+    border-radius: 10px;
+    border-color: transparent;
+    margin: 5px;
+    font-weight: bold;
+    color: white;
+    font-family: $app-type;
+  }
+  .next-btn {
     padding: 10px;
     background-color: $primary-color;
     border-radius: 10px;
     border-color: transparent;
-    margin: 10px;
+    margin: 5px;
     font-weight: bold;
     color: $secondary-color;
     font-family: $app-type;
-  }
-  .workout-list {
-    display: flex;
-    flex-direction: column;
-
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
-    }
-    li {
-      list-style: none;
-      display: flex;
-      gap: 5px;
-      align-items: center;
-      button {
-        padding: 5px;
-        background-color: white;
-        font-weight: bold;
-        font-family: $app-type;
-        border-radius: 10px;
-        border-color: transparent;
-      }
-    }
   }
 }

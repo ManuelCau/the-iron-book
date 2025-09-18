@@ -1,0 +1,64 @@
+@use "../../style/mixin.scss" as *;
+@use "../../style/font.scss" as *;
+@use "../../style/colors.scss" as *;
+
+.resume-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+
+  .resume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .return-arrow,
+    .delete-button {
+      width: 30px;
+      cursor: pointer;
+    }
+
+    .workout-title {
+      max-width: 70%;
+      text-align: center;
+      font-size: 14px;
+      color: white;
+      overflow: hidden;
+      p {
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+      }
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    li {
+      color: white;
+      font-size: 10px;
+      justify-items: center;
+    }
+  }
+
+  .start-button {
+    padding: 20px;
+    width: 100%;
+    background-color: $positive-action;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset;
+    border-radius: 15px;
+    border-color: transparent;
+    border: none;
+    font-family: $app-type;
+    font-weight: bold;
+    font-size: 20px;
+    color: $secondary-color;
+  }
+}

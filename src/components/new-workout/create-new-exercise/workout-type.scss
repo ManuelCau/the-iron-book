@@ -1,0 +1,31 @@
+@use "../../../style/mixin.scss" as *;
+@use "../../../style/font.scss" as *;
+@use "../../../style/colors.scss" as *;
+
+.select-workout-type {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  p {
+    font-size: 15px;
+    color: $primary-color;
+  }
+  .type-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    button {
+      width: 85px;
+      height: 95px;
+      background-color: $primary-color;
+      box-shadow: 5px 5px 20px rgba(0, 38, 105, 0.521) inset;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      font-family: $app-type;
+      font-size: 10px;
+      border-radius: 10px;
+      border-color: rgba(0, 38, 105, 0.521);
+    }
+  }
+}

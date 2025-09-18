@@ -1,19 +1,44 @@
 import { useState, type ChangeEvent } from "react";
-import type { Exercise } from "../../types";
+import type { Exercise, ExerciseHistory } from "../../types";
 import { Timer } from "../timer/Timer";
+import { History } from "../history-card/History";
+import historyIcon from "../../assets/SVG/buttons/book-open.svg";
+import right from "../../assets/SVG/buttons/chevron-right.svg";
+import left from "../../assets/SVG/buttons/chevron-left.svg";
+import returnBack from "../../assets/SVG/buttons/arrow-hook-down-left.svg";
+import check from "../../assets/SVG/buttons/checked.svg";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 type Props = {
   exerciseData: Exercise[];
   setExerciseData: React.Dispatch<React.SetStateAction<Exercise[]>>;
+  workoutId: number;
+  onBack: () => void;
+  onSubmitEnd: () => void;
 };
 
-export function ExerciseCard({ exerciseData, setExerciseData }: Props) {
+export function ExerciseCard({
+  exerciseData,
+  setExerciseData,
+  workoutId,
+  onBack,
+  onSubmitEnd,
+}: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [view, setView] = useState<"exercise" | "history">("exercise");
+  const [history, setHistory] = useLocalStorage<ExerciseHistory[]>(
+    "exercise-history",
+    []
+  );
 
-  function handleExerciseData(e: ChangeEvent<HTMLInputElement>, id: number) {
+  if (!exerciseData || exerciseData.length === 0) return null;
+  const currentExercise = exerciseData[currentIndex];
+
+  const handleExerciseData = (e: ChangeEvent<HTMLInputElement>, id: number) => {
     const { name, value } = e.target;
-    setExerciseData((prev) =>
-      prev.map((ex) =>
+
+    setExerciseData((prev) => {
+      const updated = prev.map((ex) =>
         ex.id === id
           ? {
               ...ex,
@@ -22,35 +47,59 @@ export function ExerciseCard({ exerciseData, setExerciseData }: Props) {
                 : value,
             }
           : ex
-      )
-    );
-  }
+      );
 
-  const currentExercise = exerciseData[currentIndex];
+      // salva singolo esercizio modificato nella history
+      const updatedHistory: ExerciseHistory[] = [
+        ...history,
+        {
+          ...updated.find((ex) => ex.id === id)!,
+          workoutId,
+          date: new Date().toLocaleDateString(),
+        },
+      ];
+      setHistory(updatedHistory);
 
-  const isCardio = typeof currentExercise.time === "number";
-  const isWeight = typeof currentExercise.reps === "number";
+      return updated;
+    });
+  };
 
+  const handleSubmitWorkout = () => {
+    const today = new Date().toLocaleDateString();
+    const newRecords = exerciseData.map((ex) => ({
+      ...ex,
+      workoutId,
+      date: today,
+    }));
+    setHistory([...history, ...newRecords]); // appendiamo come fa MainPage
+    alert("Workout completed!");
+    onSubmitEnd();
+  };
   return (
-    <>
-      <div className="exercise-card">
-        <p>{currentExercise.name}</p>
+    <div className="exercise-card">
+      <img
+        src={returnBack}
+        alt="return"
+        className="return-arrow"
+        onClick={() => {
+          if (view === "history") {
+            setView("exercise");
+          } else {
+            onBack();
+          }
+        }}
+      />
 
-        {isWeight && (
+      {view === "exercise" ? (
+        <>
           <p>
-            {currentExercise.sets} x {currentExercise.reps} — Rest:{" "}
-            {currentExercise.rest}
+            {currentExercise.name}{" "}
+            {currentExercise.time
+              ? `${currentExercise.sets} x ${currentExercise.time} min`
+              : `${currentExercise.sets} x ${currentExercise.reps}`}
           </p>
-        )}
 
-        {isCardio && (
-          <p>
-            Time: {currentExercise.time} min — Rest: {currentExercise.rest} min
-          </p>
-        )}
-
-        <div>
-          {isWeight && (
+          {currentExercise.reps !== undefined && (
             <div className="exercise-form">
               <div className="exercise-property">
                 <label>Kg</label>
@@ -72,35 +121,65 @@ export function ExerciseCard({ exerciseData, setExerciseData }: Props) {
               </div>
             </div>
           )}
-        </div>
 
-        {isCardio && (
-          <div className="timer">
-            <p>Cardio Timer</p>
-            <Timer initialRest={currentExercise.time ?? 0} />
-          </div>
-        )}
+          <Timer time={currentExercise.time} rest={currentExercise.rest} />
+        </>
+      ) : (
+        <History
+          exerciseName={currentExercise.name}
+          history={history.filter(
+            (h) => h.name === currentExercise.name && h.workoutId === workoutId
+          )}
+        />
+      )}
 
-        <div className="timer">
-          <p>Rest</p>
-          <Timer initialRest={currentExercise.rest} />
-        </div>
-      </div>
-
+      {/* Navigazione */}
       <div className="exercise-nav">
+        {/* Freccia sinistra */}
         <button
+          className={currentIndex === 0 ? "disabled" : ""}
           disabled={currentIndex === 0}
           onClick={() => setCurrentIndex((i) => i - 1)}
         >
-          Prev
+          <img src={left} alt="prev" />
         </button>
-        <button
-          disabled={currentIndex === exerciseData.length - 1}
-          onClick={() => setCurrentIndex((i) => i + 1)}
-        >
-          Next
-        </button>
+
+        {/* History toggle */}
+        {view === "exercise" && (
+          <img
+            src={historyIcon}
+            alt="History"
+            style={{ cursor: "pointer" }}
+            onClick={() => setView("history")}
+          />
+        )}
+
+        {/* Freccia destra */}
+        {(view === "history" ||
+          (view === "exercise" && currentIndex < exerciseData.length - 1)) && (
+          <button
+            className={
+              currentIndex === exerciseData.length - 1 ? "disabled" : ""
+            }
+            disabled={
+              view === "history" && currentIndex === exerciseData.length - 1
+            }
+            onClick={() => setCurrentIndex((i) => i + 1)}
+          >
+            <img src={right} alt="next" />
+          </button>
+        )}
+
+        {/* Submit workout solo in exercise view all'ultimo */}
+        {view === "exercise" && currentIndex === exerciseData.length - 1 && (
+          <button
+            onClick={handleSubmitWorkout}
+            className="completed-workout-button"
+          >
+            <img src={check} alt="checked" />
+          </button>
+        )}
       </div>
-    </>
+    </div>
   );
 }
