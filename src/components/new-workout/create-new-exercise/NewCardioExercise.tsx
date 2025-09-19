@@ -6,7 +6,6 @@ import {
   type SetStateAction,
 } from "react";
 import type { Workout, Exercise } from "../../../types";
-import returnBack from "../../../assets/SVG/buttons/arrow-hook-down-left.svg";
 
 type Props = {
   workout: Workout;
@@ -53,12 +52,6 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
 
   return (
     <div className="new-exercise-form">
-      <img
-        src={returnBack}
-        alt="Back"
-        className="back-arrow"
-        onClick={prevStep}
-      />
       <form onSubmit={addCardioExercise}>
         <div className="form-inputs">
           <label>Exercise name</label>

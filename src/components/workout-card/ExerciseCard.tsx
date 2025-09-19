@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import type { Exercise, ExerciseHistory } from "../../types";
 import { Timer } from "../timer/Timer";
 import { History } from "../history-card/History";
@@ -34,6 +34,28 @@ export function ExerciseCard({
   if (!exerciseData || exerciseData.length === 0) return null;
   const currentExercise = exerciseData[currentIndex];
 
+  useEffect(() => {
+    if (!currentExercise.reps && currentExercise.time) {
+      const today = new Date().toLocaleDateString();
+      const exists = history.some(
+        (h) =>
+          h.name === currentExercise.name &&
+          h.workoutId === workoutId &&
+          h.date === today
+      );
+      if (!exists) {
+        setHistory([
+          ...history,
+          {
+            ...currentExercise,
+            workoutId,
+            date: today,
+          },
+        ]);
+      }
+    }
+  }, [currentExercise, history, setHistory, workoutId]);
+
   const handleExerciseData = (e: ChangeEvent<HTMLInputElement>, id: number) => {
     const { name, value } = e.target;
 
@@ -49,7 +71,6 @@ export function ExerciseCard({
           : ex
       );
 
-      // salva singolo esercizio modificato nella history
       const updatedHistory: ExerciseHistory[] = [
         ...history,
         {
@@ -71,7 +92,7 @@ export function ExerciseCard({
       workoutId,
       date: today,
     }));
-    setHistory([...history, ...newRecords]); // appendiamo come fa MainPage
+    setHistory([...history, ...newRecords]);
     alert("Workout completed!");
     onSubmitEnd();
   };
@@ -133,9 +154,7 @@ export function ExerciseCard({
         />
       )}
 
-      {/* Navigazione */}
       <div className="exercise-nav">
-        {/* Freccia sinistra */}
         <button
           className={currentIndex === 0 ? "disabled" : ""}
           disabled={currentIndex === 0}
@@ -144,7 +163,6 @@ export function ExerciseCard({
           <img src={left} alt="prev" />
         </button>
 
-        {/* History toggle */}
         {view === "exercise" && (
           <img
             src={historyIcon}
@@ -154,7 +172,6 @@ export function ExerciseCard({
           />
         )}
 
-        {/* Freccia destra */}
         {(view === "history" ||
           (view === "exercise" && currentIndex < exerciseData.length - 1)) && (
           <button
@@ -170,7 +187,6 @@ export function ExerciseCard({
           </button>
         )}
 
-        {/* Submit workout solo in exercise view all'ultimo */}
         {view === "exercise" && currentIndex === exerciseData.length - 1 && (
           <button
             onClick={handleSubmitWorkout}

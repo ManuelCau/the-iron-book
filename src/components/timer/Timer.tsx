@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 type TimerProps = {
-  time?: number; // tempo dell'esercizio, opzionale
-  rest: number; // tempo di recupero
+  time?: number;
+  rest: number;
 };
 
 export function Timer({ time, rest }: TimerProps) {
@@ -15,11 +15,9 @@ export function Timer({ time, rest }: TimerProps) {
 
     if (timeLeft <= 0) {
       if (time && isExercisePhase) {
-        // Cardio: passa al rest automaticamente
         setIsExercisePhase(false);
         setTimeLeft(rest * 60);
       } else {
-        // Fine timer (peso o fine rest)
         setIsExercisePhase(true);
         setTimeLeft((time ?? rest) * 60);
         setIsRunning(false);

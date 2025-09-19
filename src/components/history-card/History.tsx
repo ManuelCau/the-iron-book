@@ -6,13 +6,11 @@ type Props = {
 };
 
 export function History({ exerciseName, history }: Props) {
-  // Filtra solo gli elementi del singolo esercizio
   const filteredHistory = history.filter((h) => h.name === exerciseName);
 
-  // Riduce per prendere solo l'ultimo record per data
   const latestHistoryPerDate = Object.values(
     filteredHistory.reduce((acc, h) => {
-      acc[h.date] = h; // sovrascrive ogni volta, quindi rimane solo l'ultimo della data
+      acc[h.date] = h;
       return acc;
     }, {} as Record<string, ExerciseHistory>)
   );
