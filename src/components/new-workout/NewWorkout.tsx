@@ -33,22 +33,28 @@ export function NewWorkout({
     summary: "type",
   };
 
-  const handleBack = () => {
+  function handleBack() {
     if (prevStep[step]) setStep(prevStep[step]!);
     else {
       if (window.confirm("Are you sure you want to cancel this workout?")) {
         setShowForm(false);
       }
     }
-  };
+  }
+  function handleRemoveExercise(id: number) {
+    setWorkout((prev) => ({
+      ...prev,
+      exercises: prev.exercises.filter((ex) => ex.id !== id),
+    }));
+  }
 
-  const handleSubmit = () => {
+  function handleSubmit() {
     onAddedWorkout(workout);
     setWorkout({ id: Date.now(), title: "", exercises: [] });
     setStep("name");
     setShowForm(false);
     setShowWorkouts(true);
-  };
+  }
 
   const steps: Record<Step, JSX.Element> = {
     name: (
@@ -87,6 +93,12 @@ export function NewWorkout({
                   {ex.time
                     ? `${ex.sets} x ${ex.time} min`
                     : `${ex.sets} x ${ex.reps} reps`}
+                  <button
+                    onClick={() => handleRemoveExercise(ex.id)}
+                    className="remove-btn"
+                  >
+                    ❌
+                  </button>
                 </li>
               ))}
             </ul>
