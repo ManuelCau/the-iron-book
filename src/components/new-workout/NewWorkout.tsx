@@ -74,18 +74,20 @@ export function NewWorkout({
           setWorkout={setWorkout}
           setStep={setStep}
         />
-        {workout.exercises.length > 0 && (
-          <div className="workout-list">
-            <div className="navigation-buttons">
-              <button onClick={handleBack} className="go-back-btn">
-                Back
+
+        <div className="workout-list">
+          <div className="navigation-buttons">
+            <button onClick={handleBack} className="go-back-btn">
+              Back
+            </button>
+            {workout.exercises.length > 0 && (
+              <button onClick={() => setStep("summary")} className="next-btn">
+                Next
               </button>
-              {workout.exercises.length > 0 && (
-                <button onClick={() => setStep("summary")} className="next-btn">
-                  Next
-                </button>
-              )}
-            </div>
+            )}
+          </div>
+
+          {workout.exercises.length > 0 && (
             <ul>
               {workout.exercises.map((ex) => (
                 <li key={ex.id}>
@@ -102,8 +104,8 @@ export function NewWorkout({
                 </li>
               ))}
             </ul>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     ),
     weight: (
