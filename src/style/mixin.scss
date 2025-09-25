@@ -1,4 +1,4 @@
-@use "./queryVariables.scss" as *;
+@use "./query-variables.scss" as *;
 
 @mixin respond-to($device) {
   @if $device == mobile {

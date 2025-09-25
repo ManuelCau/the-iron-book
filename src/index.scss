@@ -1,12 +1,12 @@
 @forward "../src/components/main-page/mainPage.scss";
-@forward "../src/components/new-workout/newWorkout.scss";
-@forward "../src/components/workout-card/workoutCards.scss";
+@forward "../src/components/new-workout/new-workout.scss";
+@forward "../src/components/workout-card/workout-cards.scss";
 @forward "../src/components/timer/timer.scss";
 @forward "../src//components/history-card/history.scss";
-@forward "../src/components/resume-card/resumeCard.scss";
+@forward "../src/components/resume-card/resume-card.scss";
 @forward "../src//components/new-workout/create-new-exercise/workout-name.scss";
 @forward "../src//components/new-workout/create-new-exercise/workout-type.scss";
-@forward "../src//components/new-workout/create-new-exercise/newExercise.scss";
+@forward "../src//components/new-workout/create-new-exercise/new-exercise.scss";
 
 @use "../src/style/font.scss" as *;
 
