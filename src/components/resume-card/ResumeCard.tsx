@@ -42,7 +42,10 @@ export function ResumeCard({
           <li key={ex.id}>
             {ex.name} –{" "}
             {ex.time
-              ? `${ex.time} min × ${ex.sets}`
+              ? `${ex.sets} x ${String(Math.floor(ex.time / 60)).padStart(
+                  2,
+                  "0"
+                )} : ${String(ex.time % 60).padStart(2, "0")} min`
               : `${ex.sets} × ${ex.reps}`}
           </li>
         ))}

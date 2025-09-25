@@ -2,7 +2,7 @@
 @use "../../style/font.scss" as *;
 @use "../../style/colors.scss" as *;
 
-.timer {
+.timer-button {
   padding: 10px;
   width: 100%;
   border-radius: 10px;
@@ -14,4 +14,18 @@
   color: white;
   font-size: 50px;
   margin-top: 10px;
+}
+
+.reset-button {
+  padding: 10px;
+  width: 100%;
+  border-radius: 10px;
+  border-color: transparent;
+  border: none;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset;
+  font-family: $app-type;
+  font-weight: bold;
+  color: $secondary-color;
+  margin-top: 10px;
+  background-color: $primary-color;
 }

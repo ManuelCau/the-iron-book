@@ -8,6 +8,35 @@
   flex-direction: column;
   justify-content: center;
 
+  .time-form {
+    display: flex;
+    flex-direction: column;
+    p {
+      font-size: 10px;
+      color: $primary-color;
+      margin-top: 15px;
+    }
+    .time-settings {
+      display: flex;
+      flex-direction: row;
+      .time-form-input {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        label {
+          font-size: 10px;
+          margin-bottom: 10px;
+        }
+        input {
+          padding: 10px;
+          border-radius: 15px;
+          width: 50%;
+          background-color: rgba(228, 220, 220, 0.766);
+        }
+      }
+    }
+  }
+
   .form-inputs {
     display: flex;
     gap: 10px;
@@ -28,9 +57,10 @@
   }
   .buttons {
     display: flex;
-    margin-top: 20px;
+    margin-top: 40px;
     gap: 10px;
     margin-bottom: 50px;
+    justify-content: center;
     .submit-btn {
       padding: 10px;
       background-color: $primary-color;

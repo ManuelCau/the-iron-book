@@ -3,47 +3,98 @@ import { useEffect, useState } from "react";
 type TimerProps = {
   time?: number;
   rest: number;
+  sets?: number;
+  numberOfExercises?: number;
+  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
+  currentIndex: number;
+  handleSubmitWorkout: () => void;
+  isChanged: boolean;
 };
 
-export function Timer({ time, rest }: TimerProps) {
-  const [timeLeft, setTimeLeft] = useState((time ?? rest) * 60);
+export function Timer({
+  time,
+  rest,
+  sets,
+  numberOfExercises,
+  handleSubmitWorkout,
+  setCurrentIndex,
+  currentIndex,
+  isChanged,
+}: TimerProps) {
+  const [timeLeft, setTimeLeft] = useState(time ?? rest);
   const [isRunning, setIsRunning] = useState(false);
   const [isExercisePhase, setIsExercisePhase] = useState(true);
+  const [currentSet, setCurrentSet] = useState(0);
 
   useEffect(() => {
     if (!isRunning) return;
 
-    if (timeLeft <= 0) {
-      if (time && isExercisePhase) {
-        setIsExercisePhase(false);
-        setTimeLeft(rest * 60);
-      } else {
-        setIsExercisePhase(true);
-        setTimeLeft((time ?? rest) * 60);
-        setIsRunning(false);
-      }
-      return;
-    }
-
     const interval = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
+      if (timeLeft! === 0) {
+        if (time && isExercisePhase && rest) {
+          setTimeLeft(time);
+          setIsExercisePhase(!isExercisePhase);
+        }
+        if (time && !isExercisePhase && rest) {
+          setTimeLeft(rest);
+          setIsExercisePhase(!isExercisePhase);
+        }
+
+        if (currentSet === sets && currentIndex == numberOfExercises) {
+          setIsExercisePhase(true);
+          setIsRunning(false);
+          handleSubmitWorkout(); //a fine esercizio doppio alert a schermo e [Violation] 'setInterval' handler took 13386ms
+        } else if (currentSet === sets) {
+          setCurrentIndex((prev) => prev + 1);
+          setCurrentSet(0);
+        }
+
+        if (!rest) {
+          setTimeLeft(time!);
+          setIsRunning(false);
+        }
+      } else {
+        setTimeLeft((prev) => prev! - 1);
+      }
     }, 1000);
+
+    if (currentSet === sets && !isRunning) {
+      return () => clearInterval(interval);
+    }
 
     return () => clearInterval(interval);
   }, [isRunning, timeLeft, isExercisePhase, time, rest]);
+
+  useEffect(() => {
+    if (isExercisePhase) {
+      setTimeLeft(time ?? rest);
+    } else {
+      setTimeLeft(rest);
+      setCurrentSet((prev) => prev + 1);
+    }
+  }, [isExercisePhase]);
+
+  useEffect(() => {
+    setIsRunning(false);
+    setTimeLeft(time ?? rest);
+  }, [isChanged]);
 
   function handleStartStop() {
     if (isRunning) {
       setIsRunning(false);
       setIsExercisePhase(true);
-      setTimeLeft((time ?? rest) * 60);
     } else {
       setIsRunning(true);
     }
   }
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
+  function handleResetButton() {
+    setIsRunning(false);
+    setTimeLeft(time ?? rest);
+  }
+
+  const minutes = Math.floor(timeLeft! / 60);
+  const seconds = timeLeft! % 60;
 
   const buttonStyle = {
     backgroundColor: time
@@ -54,8 +105,17 @@ export function Timer({ time, rest }: TimerProps) {
   };
 
   return (
-    <button className="timer" onClick={handleStartStop} style={buttonStyle}>
-      {minutes}:{seconds.toString().padStart(2, "0")}
-    </button>
+    <div>
+      <button
+        className="timer-button"
+        onClick={handleStartStop}
+        style={buttonStyle}
+      >
+        {minutes}:{seconds.toString().padStart(2, "0")}
+      </button>
+      <button className="reset-button" onClick={handleResetButton}>
+        Reset
+      </button>
+    </div>
   );
 }
