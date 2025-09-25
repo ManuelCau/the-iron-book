@@ -40,13 +40,16 @@ export function MainPage() {
         <img className="logo" src={logo} alt="logo" />
       </div>
 
-      {workoutList.length >= 1 && showNewWorkoutForm ? (
+      {workoutList.length >= 1 && !showNewWorkoutForm ? (
         <p>My Workouts</p>
       ) : (
-        <p>
-          Empty for now… <br></br>full of progress tomorrow. Start today with
-          your first workout!
-        </p>
+        workoutList.length === 0 &&
+        !showNewWorkoutForm && (
+          <p>
+            Empty for now… <br />
+            full of progress tomorrow. Start today with your first workout!
+          </p>
+        )
       )}
 
       {showWorkouts &&
