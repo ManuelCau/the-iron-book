@@ -3,6 +3,8 @@
 @use "../../style/colors.scss" as *;
 
 .workout-preview {
+  display: flex;
+  justify-content: center;
   background: linear-gradient(rgba(9, 43, 74, 0.592) 10%, #062c4e89 100%);
   box-shadow: 10px 10px 10px rgba(50, 101, 183, 0.757) inset;
   border-radius: 20px;
@@ -84,10 +86,19 @@
     display: flex;
     flex-direction: column;
     margin-top: 15px;
-
     .return-arrow {
       width: 30px;
       color: $primary-color;
+    }
+    .ex-info {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      p {
+        font-size: 10px;
+        align-items: center;
+      }
     }
 
     .workout-exercise-list {

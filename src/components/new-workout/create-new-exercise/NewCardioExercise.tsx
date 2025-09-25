@@ -54,6 +54,9 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
     });
 
     setCardioExercise({ id: Date.now(), name: "", sets: 0, time: 0, rest: 0 });
+    setMin(0);
+    setSec(0);
+    window.confirm("Exercise added!");
   }
 
   return (
@@ -64,6 +67,7 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="text"
             name="name"
+            placeholder="Exercise name"
             value={cardioExercise.name}
             onChange={handleCardioExerciseChange}
           />
@@ -73,7 +77,8 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="number"
             name="sets"
-            value={cardioExercise.sets}
+            placeholder="0"
+            value={cardioExercise.sets === 0 ? "" : cardioExercise.sets}
             onChange={handleCardioExerciseChange}
           />
         </div>
@@ -84,7 +89,8 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
               <label>Min</label>
               <input
                 type="number"
-                value={min}
+                placeholder="0"
+                value={min === 0 ? "" : min}
                 onChange={(e) => setMin(Number(e.target.value))}
               />
             </div>
@@ -92,7 +98,8 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
               <label>Sec</label>
               <input
                 type="number"
-                value={sec}
+                placeholder="0"
+                value={sec === 0 ? "" : sec}
                 onChange={(e) => setSec(Number(e.target.value))}
               />
             </div>
