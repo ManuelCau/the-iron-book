@@ -13,7 +13,7 @@ export type ExerciseHistory = Exercise & {
   workoutId: number;
 };
 
-export type WorkoutType = "weight" | "cardio" | "superset" | "circuit";
+export type WorkoutType = "weight" | "cardio" | "circuit";
 
 export type Workout = {
   id: number;

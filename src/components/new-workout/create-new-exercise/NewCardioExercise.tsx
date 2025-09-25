@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useState,
   type ChangeEvent,
   type Dispatch,
@@ -14,6 +15,8 @@ type Props = {
 };
 
 export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(0);
   const [cardioExercise, setCardioExercise] = useState<Exercise>({
     id: Date.now(),
     name: "",
@@ -22,11 +25,15 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
     rest: 0,
   });
 
+  useEffect(() => {
+    setCardioExercise((cardio) => ({ ...cardio, ["time"]: min * 60 + sec }));
+  }, [min, sec]);
+
   function handleCardioExerciseChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setCardioExercise({
       ...cardioExercise,
-      [name]: ["sets", "time", "rest"].includes(name) ? Number(value) : value,
+      [name]: ["sets"].includes(name) ? Number(value) : value,
     });
   }
 
@@ -35,8 +42,7 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
     if (
       !cardioExercise.name ||
       cardioExercise.sets! <= 0 ||
-      cardioExercise.time! <= 0 ||
-      cardioExercise.rest < 0
+      cardioExercise.time! <= 0
     ) {
       alert("Please fill all fields correctly!");
       return;
@@ -58,7 +64,6 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="text"
             name="name"
-            placeholder="Exercise name"
             value={cardioExercise.name}
             onChange={handleCardioExerciseChange}
           />
@@ -68,31 +73,32 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="number"
             name="sets"
-            placeholder="Sets"
             value={cardioExercise.sets}
             onChange={handleCardioExerciseChange}
           />
         </div>
-        <div className="form-inputs">
-          <label>Time (min)</label>
-          <input
-            type="number"
-            name="time"
-            placeholder="Time"
-            value={cardioExercise.time}
-            onChange={handleCardioExerciseChange}
-          />
+        <div className="time-form">
+          <p>Time</p>
+          <div className="time-settings">
+            <div className="time-form-input">
+              <label>Min</label>
+              <input
+                type="number"
+                value={min}
+                onChange={(e) => setMin(Number(e.target.value))}
+              />
+            </div>
+            <div className="time-form-input">
+              <label>Sec</label>
+              <input
+                type="number"
+                value={sec}
+                onChange={(e) => setSec(Number(e.target.value))}
+              />
+            </div>
+          </div>
         </div>
-        <div className="form-inputs">
-          <label>Rest (min)</label>
-          <input
-            type="number"
-            name="rest"
-            placeholder="Rest"
-            value={cardioExercise.rest}
-            onChange={handleCardioExerciseChange}
-          />
-        </div>
+
         <div className="buttons">
           <button className="submit-btn">Add exercise</button>
           <button className="back-btn" onClick={prevStep}>

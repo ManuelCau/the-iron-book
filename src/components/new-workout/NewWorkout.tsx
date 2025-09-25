@@ -4,6 +4,7 @@ import { NewWeightExercise } from "./create-new-exercise/NewWeightExercise";
 import { NewCardioExercise } from "./create-new-exercise/NewCardioExercise";
 import { SelectWorkoutType } from "./create-new-exercise/SelectWorkoutType";
 import { WorkoutName } from "./create-new-exercise/WorkoutName";
+import { NewCircuitExercise } from "./create-new-exercise/NewCircuitExercise";
 
 type Props = {
   onAddedWorkout: (workout: Workout) => void;
@@ -11,7 +12,7 @@ type Props = {
   setShowWorkouts: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type Step = "name" | "type" | "weight" | "cardio" | "summary";
+type Step = "name" | "type" | "weight" | "cardio" | "circuit" | "summary";
 
 export function NewWorkout({
   onAddedWorkout,
@@ -30,6 +31,7 @@ export function NewWorkout({
     type: "name",
     weight: "type",
     cardio: "type",
+    circuit: "type",
     summary: "type",
   };
 
@@ -38,6 +40,7 @@ export function NewWorkout({
     else {
       if (window.confirm("Are you sure you want to cancel this workout?")) {
         setShowForm(false);
+        setShowWorkouts(true);
       }
     }
   }
@@ -82,7 +85,7 @@ export function NewWorkout({
             </button>
             {workout.exercises.length > 0 && (
               <button onClick={() => setStep("summary")} className="next-btn">
-                Next
+                Preview
               </button>
             )}
           </div>
@@ -93,7 +96,10 @@ export function NewWorkout({
                 <li key={ex.id}>
                   {ex.name} –{" "}
                   {ex.time
-                    ? `${ex.sets} x ${ex.time} min`
+                    ? `${ex.sets} x ${String(Math.floor(ex.time / 60)).padStart(
+                        2,
+                        "0"
+                      )} : ${String(ex.time % 60).padStart(2, "0")} min`
                     : `${ex.sets} x ${ex.reps} reps`}
                   <button
                     onClick={() => handleRemoveExercise(ex.id)}
@@ -122,6 +128,13 @@ export function NewWorkout({
         prevStep={() => setStep("type")}
       />
     ),
+    circuit: (
+      <NewCircuitExercise
+        workout={workout}
+        setWorkout={setWorkout}
+        prevStep={() => setStep("type")}
+      />
+    ),
     summary: (
       <div className="workout-list">
         <p>{workout.title}</p>
@@ -131,7 +144,10 @@ export function NewWorkout({
             <li key={ex.id}>
               {ex.name} –{" "}
               {ex.time
-                ? `${ex.sets} x ${ex.time} min`
+                ? `${ex.sets} x ${String(Math.floor(ex.time / 60)).padStart(
+                    2,
+                    "0"
+                  )} : ${String(ex.time % 60).padStart(2, "0")} min`
                 : `${ex.sets} x ${ex.reps} reps`}
             </li>
           ))}

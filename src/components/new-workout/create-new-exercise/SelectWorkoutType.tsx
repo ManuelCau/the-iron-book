@@ -8,7 +8,9 @@ type Props = {
   workout: Workout;
   setWorkout: React.Dispatch<React.SetStateAction<Workout>>;
   setStep: React.Dispatch<
-    React.SetStateAction<"name" | "type" | "weight" | "cardio" | "summary">
+    React.SetStateAction<
+      "name" | "type" | "weight" | "cardio" | "circuit" | "summary"
+    >
   >;
 };
 
@@ -36,7 +38,7 @@ export function SelectWorkoutType({ workout, setWorkout, setStep }: Props) {
         <button
           onClick={() => {
             setWorkout({ ...workout, type: "circuit" });
-            setStep("cardio");
+            setStep("circuit");
           }}
         >
           <img src={time} alt="time" /> Circuit

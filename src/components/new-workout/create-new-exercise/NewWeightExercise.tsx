@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useState,
   type ChangeEvent,
   type Dispatch,
@@ -14,6 +15,8 @@ type Props = {
 };
 
 export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(0);
   const [weightExercise, setWeightExercise] = useState<Exercise>({
     id: Date.now(),
     name: "",
@@ -22,11 +25,15 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
     rest: 0,
   });
 
+  useEffect(() => {
+    setWeightExercise((weight) => ({ ...weight, ["time"]: min * 60 + sec }));
+  }, [min, sec]);
+
   function handleExerciseChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setWeightExercise({
       ...weightExercise,
-      [name]: ["sets", "reps", "rest"].includes(name) ? Number(value) : value,
+      [name]: ["sets", "reps"].includes(name) ? Number(value) : value,
     });
   }
 
@@ -58,7 +65,6 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="text"
             name="name"
-            placeholder="Exercise name"
             value={weightExercise.name}
             onChange={handleExerciseChange}
           />
@@ -68,7 +74,6 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="number"
             name="sets"
-            placeholder="Sets"
             value={weightExercise.sets}
             onChange={handleExerciseChange}
           />
@@ -78,21 +83,32 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="number"
             name="reps"
-            placeholder="Reps"
             value={weightExercise.reps}
             onChange={handleExerciseChange}
           />
         </div>
-        <div className="form-inputs">
-          <label>Rest (min)</label>
-          <input
-            type="number"
-            name="rest"
-            placeholder="Rest"
-            value={weightExercise.rest}
-            onChange={handleExerciseChange}
-          />
+        <div className="time-form">
+          <p>Rest</p>
+          <div className="time-settings">
+            <div className="time-form-input">
+              <label>Min</label>
+              <input
+                type="number"
+                value={min}
+                onChange={(e) => setMin(Number(e.target.value))}
+              />
+            </div>
+            <div className="time-form-input">
+              <label>Sec</label>
+              <input
+                type="number"
+                value={sec}
+                onChange={(e) => setSec(Number(e.target.value))}
+              />
+            </div>
+          </div>
         </div>
+
         <div className="buttons">
           <button className="submit-btn">Add exercise</button>
           <button className="back-btn" onClick={prevStep}>

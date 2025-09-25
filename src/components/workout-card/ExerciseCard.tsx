@@ -30,6 +30,7 @@ export function ExerciseCard({
     "exercise-history",
     []
   );
+  const [isChanged, setIsChanged] = useState(false);
 
   if (!exerciseData || exerciseData.length === 0) return null;
   const currentExercise = exerciseData[currentIndex];
@@ -85,7 +86,7 @@ export function ExerciseCard({
     });
   };
 
-  const handleSubmitWorkout = () => {
+  function handleSubmitWorkout() {
     const today = new Date().toLocaleDateString();
     const newRecords = exerciseData.map((ex) => ({
       ...ex,
@@ -95,7 +96,8 @@ export function ExerciseCard({
     setHistory([...history, ...newRecords]);
     alert("Workout completed!");
     onSubmitEnd();
-  };
+  }
+
   return (
     <div className="exercise-card">
       <img
@@ -116,7 +118,11 @@ export function ExerciseCard({
           <p>
             {currentExercise.name}{" "}
             {currentExercise.time
-              ? `${currentExercise.sets} x ${currentExercise.time} min`
+              ? `${currentExercise.sets} x ${String(
+                  Math.floor(currentExercise.time / 60)
+                ).padStart(2, "0")} : ${String(
+                  currentExercise.time % 60
+                ).padStart(2, "0")} min`
               : `${currentExercise.sets} x ${currentExercise.reps}`}
           </p>
 
@@ -143,7 +149,16 @@ export function ExerciseCard({
             </div>
           )}
 
-          <Timer time={currentExercise.time} rest={currentExercise.rest} />
+          <Timer
+            time={currentExercise.time}
+            rest={currentExercise.rest}
+            sets={currentExercise.sets}
+            numberOfExercises={exerciseData.length - 1}
+            setCurrentIndex={setCurrentIndex}
+            currentIndex={currentIndex}
+            handleSubmitWorkout={handleSubmitWorkout}
+            isChanged={isChanged}
+          />
         </>
       ) : (
         <History
@@ -158,7 +173,10 @@ export function ExerciseCard({
         <button
           className={currentIndex === 0 ? "disabled" : ""}
           disabled={currentIndex === 0}
-          onClick={() => setCurrentIndex((i) => i - 1)}
+          onClick={() => {
+            setCurrentIndex((i) => i - 1);
+            setIsChanged(!isChanged);
+          }}
         >
           <img src={left} alt="prev" />
         </button>
@@ -181,7 +199,10 @@ export function ExerciseCard({
             disabled={
               view === "history" && currentIndex === exerciseData.length - 1
             }
-            onClick={() => setCurrentIndex((i) => i + 1)}
+            onClick={() => {
+              setCurrentIndex((i) => i + 1);
+              setIsChanged(!isChanged);
+            }}
           >
             <img src={right} alt="next" />
           </button>
