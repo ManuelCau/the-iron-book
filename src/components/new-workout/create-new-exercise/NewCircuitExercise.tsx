@@ -55,6 +55,7 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
     });
 
     setCircuitExercise({ id: Date.now(), name: "", sets: 0, time: 0, rest: 0 });
+    window.confirm("Exercise added!");
   }
 
   return (
@@ -76,8 +77,8 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="number"
             name="sets"
-            placeholder="Sets"
-            value={circuitExercise.sets}
+            placeholder="0"
+            value={circuitExercise.sets === 0 ? "" : circuitExercise.sets}
             onChange={handleCircuitExerciseChange}
           />
         </div>
@@ -89,7 +90,8 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
               <label>Min</label>
               <input
                 type="number"
-                value={min}
+                placeholder="0"
+                value={min === 0 ? "" : min}
                 onChange={(e) => setMin(Number(e.target.value))}
               />
             </div>
@@ -97,7 +99,8 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
               <label>Sec</label>
               <input
                 type="number"
-                value={sec}
+                placeholder="0"
+                value={sec === 0 ? "" : sec}
                 onChange={(e) => setSec(Number(e.target.value))}
               />
             </div>
@@ -111,7 +114,12 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
               <label>Min</label>
               <input
                 type="number"
-                value={Math.floor(circuitExercise.rest / 60)}
+                placeholder="0"
+                value={
+                  Math.floor(circuitExercise.rest / 60) === 0
+                    ? ""
+                    : Math.floor(circuitExercise.rest / 60)
+                }
                 onChange={(e) =>
                   setCircuitExercise({
                     ...circuitExercise,
@@ -125,7 +133,12 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
               <label>Sec</label>
               <input
                 type="number"
-                value={circuitExercise.rest % 60}
+                placeholder="0"
+                value={
+                  circuitExercise.rest % 60 === 0
+                    ? ""
+                    : circuitExercise.rest % 60
+                }
                 onChange={(e) =>
                   setCircuitExercise({
                     ...circuitExercise,

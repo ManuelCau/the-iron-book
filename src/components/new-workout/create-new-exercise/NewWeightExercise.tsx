@@ -55,6 +55,9 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
     });
 
     setWeightExercise({ id: Date.now(), name: "", sets: 0, reps: 0, rest: 0 });
+    setMin(0);
+    setSec(0);
+    window.confirm("Exercise added!");
   }
 
   return (
@@ -65,6 +68,7 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="text"
             name="name"
+            placeholder="Exercise name"
             value={weightExercise.name}
             onChange={handleExerciseChange}
           />
@@ -74,7 +78,8 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="number"
             name="sets"
-            value={weightExercise.sets}
+            placeholder="0"
+            value={weightExercise.sets === 0 ? "" : weightExercise.sets}
             onChange={handleExerciseChange}
           />
         </div>
@@ -83,7 +88,8 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="number"
             name="reps"
-            value={weightExercise.reps}
+            placeholder="0"
+            value={weightExercise.reps === 0 ? "" : weightExercise.reps}
             onChange={handleExerciseChange}
           />
         </div>
@@ -94,7 +100,8 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
               <label>Min</label>
               <input
                 type="number"
-                value={min}
+                placeholder="0"
+                value={min === 0 ? "" : min}
                 onChange={(e) => setMin(Number(e.target.value))}
               />
             </div>
@@ -102,7 +109,8 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
               <label>Sec</label>
               <input
                 type="number"
-                value={sec}
+                placeholder="0"
+                value={sec === 0 ? "" : sec}
                 onChange={(e) => setSec(Number(e.target.value))}
               />
             </div>

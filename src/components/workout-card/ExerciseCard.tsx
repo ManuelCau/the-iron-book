@@ -115,16 +115,19 @@ export function ExerciseCard({
 
       {view === "exercise" ? (
         <>
-          <p>
-            {currentExercise.name}{" "}
-            {currentExercise.time
-              ? `${currentExercise.sets} x ${String(
-                  Math.floor(currentExercise.time / 60)
-                ).padStart(2, "0")} : ${String(
-                  currentExercise.time % 60
-                ).padStart(2, "0")} min`
-              : `${currentExercise.sets} x ${currentExercise.reps}`}
-          </p>
+          <div className="ex-info">
+            {" "}
+            <p>
+              {currentExercise.name}{" "}
+              {currentExercise.time
+                ? `${currentExercise.sets} x ${String(
+                    Math.floor(currentExercise.time / 60)
+                  ).padStart(2, "0")} : ${String(
+                    currentExercise.time % 60
+                  ).padStart(2, "0")} min`
+                : `${currentExercise.sets} x ${currentExercise.reps}`}
+            </p>
+          </div>
 
           {currentExercise.reps !== undefined && (
             <div className="exercise-form">
