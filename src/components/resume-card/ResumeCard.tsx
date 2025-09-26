@@ -1,6 +1,7 @@
 import type { Exercise, Workout } from "../../types";
 import trash from "../../assets/SVG/buttons/trash.svg";
 import returnBack from "../../assets/SVG/buttons/arrow-hook-down-left.svg";
+import { ExerciseFormat } from "../new-workout/ExerciseFormat";
 
 type Props = {
   workout: Workout;
@@ -40,13 +41,7 @@ export function ResumeCard({
       <ul>
         {exerciseData.map((ex) => (
           <li key={ex.id}>
-            {ex.name} –{" "}
-            {ex.time
-              ? `${ex.sets} x ${String(Math.floor(ex.time / 60)).padStart(
-                  2,
-                  "0"
-                )} : ${String(ex.time % 60).padStart(2, "0")} min`
-              : `${ex.sets} × ${ex.reps}`}
+            {ex.name} – {ExerciseFormat(ex)}
           </li>
         ))}
       </ul>

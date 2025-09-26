@@ -5,6 +5,8 @@ import { NewCardioExercise } from "./create-new-exercise/NewCardioExercise";
 import { SelectWorkoutType } from "./create-new-exercise/SelectWorkoutType";
 import { WorkoutName } from "./create-new-exercise/WorkoutName";
 import { NewCircuitExercise } from "./create-new-exercise/NewCircuitExercise";
+import { ExerciseList } from "./ExerciseList";
+import { NavigationButtons } from "./NavigationButtons";
 
 type Props = {
   onAddedWorkout: (workout: Workout) => void;
@@ -44,12 +46,6 @@ export function NewWorkout({
       }
     }
   }
-  function handleRemoveExercise(id: number) {
-    setWorkout((prev) => ({
-      ...prev,
-      exercises: prev.exercises.filter((ex) => ex.id !== id),
-    }));
-  }
 
   function handleSubmit() {
     onAddedWorkout(workout);
@@ -77,41 +73,16 @@ export function NewWorkout({
           setWorkout={setWorkout}
           setStep={setStep}
         />
+        <NavigationButtons
+          onBack={handleBack}
+          onNext={
+            workout.exercises.length > 0 ? () => setStep("summary") : undefined
+          }
+        />
 
-        <div className="workout-list">
-          <div className="navigation-buttons">
-            <button onClick={handleBack} className="go-back-btn">
-              Back
-            </button>
-            {workout.exercises.length > 0 && (
-              <button onClick={() => setStep("summary")} className="next-btn">
-                Preview
-              </button>
-            )}
-          </div>
-
-          {workout.exercises.length > 0 && (
-            <ul>
-              {workout.exercises.map((ex) => (
-                <li key={ex.id}>
-                  {ex.name} –{" "}
-                  {ex.time
-                    ? `${ex.sets} x ${String(Math.floor(ex.time / 60)).padStart(
-                        2,
-                        "0"
-                      )} : ${String(ex.time % 60).padStart(2, "0")} min`
-                    : `${ex.sets} x ${ex.reps} reps`}
-                  <button
-                    onClick={() => handleRemoveExercise(ex.id)}
-                    className="remove-btn"
-                  >
-                    ❌
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {workout.exercises.length > 0 && (
+          <ExerciseList exercises={workout.exercises} setWorkout={setWorkout} />
+        )}
       </div>
     ),
     weight: (
@@ -139,27 +110,8 @@ export function NewWorkout({
       <div className="workout-list">
         <p>{workout.title}</p>
         <p>Summary:</p>
-        <ul>
-          {workout.exercises.map((ex) => (
-            <li key={ex.id}>
-              {ex.name} –{" "}
-              {ex.time
-                ? `${ex.sets} x ${String(Math.floor(ex.time / 60)).padStart(
-                    2,
-                    "0"
-                  )} : ${String(ex.time % 60).padStart(2, "0")} min`
-                : `${ex.sets} x ${ex.reps} reps`}
-            </li>
-          ))}
-        </ul>
-        <div className="navigation-buttons">
-          <button className="go-back-btn" onClick={handleBack}>
-            Back
-          </button>
-          <button className="save-btn" onClick={handleSubmit}>
-            Save Workout
-          </button>
-        </div>
+        <ExerciseList exercises={workout.exercises} setWorkout={setWorkout} />
+        <NavigationButtons onBack={handleBack} onSave={handleSubmit} />
       </div>
     ),
   };

@@ -107,10 +107,10 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
         </div>
 
         <div className="buttons">
-          <button className="submit-btn">Add exercise</button>
           <button className="back-btn" onClick={prevStep}>
             Back
           </button>
+          <button className="submit-btn">Add exercise</button>
         </div>
       </form>
     </div>
