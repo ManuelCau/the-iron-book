@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/the-iron-book/",
   test: {
     environment: "jsdom",
     globals: true,

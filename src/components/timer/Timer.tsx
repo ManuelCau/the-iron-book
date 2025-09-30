@@ -104,6 +104,16 @@ export function Timer({
       : "#4dff88",
   };
 
+  useEffect(() => {
+    if (timeLeft === 0 && isRunning) {
+      const sound = new Audio("/audio/beep-401570.mp3");
+      sound.play().catch(() => {
+        console.log("Audio could not be played now");
+        if (isExercisePhase) isExercisePhase;
+      });
+    }
+  }, [timeLeft, isRunning, isExercisePhase]);
+
   return (
     <div>
       <button
