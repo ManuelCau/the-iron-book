@@ -25,7 +25,6 @@ describe("Timer", () => {
 
     fireEvent.click(timerButton);
     act(() => {
-      //When testing, code that causes React state updates should be wrapped into act(...)- cauz of DOM updating
       vi.advanceTimersByTime(2000);
     });
 

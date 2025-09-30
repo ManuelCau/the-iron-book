@@ -38,13 +38,13 @@ export function ExerciseCard({
   useEffect(() => {
     if (!currentExercise.reps && currentExercise.time) {
       const today = new Date().toLocaleDateString();
-      const exists = history.some(
+      const alreadyExists = history.some(
         (h) =>
           h.name === currentExercise.name &&
           h.workoutId === workoutId &&
           h.date === today
       );
-      if (!exists) {
+      if (!alreadyExists) {
         setHistory([
           ...history,
           {
@@ -136,7 +136,8 @@ export function ExerciseCard({
                 <input
                   type="number"
                   name="kg"
-                  value={currentExercise.kg ?? 0}
+                  value={currentExercise.kg === 0 ? "" : currentExercise.kg}
+                  placeholder="0"
                   onChange={(e) => handleExerciseData(e, currentExercise.id)}
                 />
               </div>
@@ -145,7 +146,8 @@ export function ExerciseCard({
                 <input
                   type="number"
                   name="reps"
-                  value={currentExercise.reps ?? 0}
+                  placeholder="0"
+                  value={currentExercise.reps === 0 ? "" : currentExercise.reps}
                   onChange={(e) => handleExerciseData(e, currentExercise.id)}
                 />
               </div>
