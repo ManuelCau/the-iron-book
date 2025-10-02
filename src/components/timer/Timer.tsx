@@ -106,7 +106,9 @@ export function Timer({
 
   useEffect(() => {
     if (timeLeft === 0 && isRunning) {
-      const sound = new Audio("/audio/beep-401570.mp3");
+      const sound = new Audio(
+        `${import.meta.env.BASE_URL}audio/beep-401570.mp3`
+      );
       sound.play().catch(() => {
         console.log("Audio could not be played now");
         if (isExercisePhase) isExercisePhase;
