@@ -6,14 +6,25 @@
   padding: 10px;
   width: 100%;
   border-radius: 10px;
-  border-color: transparent;
   border: none;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset;
   font-family: $app-type;
   font-weight: bold;
   color: white;
   font-size: 50px;
   margin-top: 10px;
+  transition: background-color 0.5s ease;
+
+  &.neutral {
+    background-color: #4676d6cb;
+  }
+
+  &.exercise {
+    background-color: #ff4d4d;
+  }
+
+  &.rest {
+    background-color: #4dff88;
+  }
 }
 
 .reset-button {
@@ -22,10 +33,16 @@
   border-radius: 10px;
   border-color: transparent;
   border: none;
-  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset;
   font-family: $app-type;
   font-weight: bold;
   color: $secondary-color;
   margin-top: 10px;
   background-color: $primary-color;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+    0px 5px 10px rgba(0, 0, 5, 0.801);
+  &:active {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+      0px 5px 10px rgba(0, 0, 5, 0.521),
+      0 0 15px 5px rgba(26, 52, 95, 0.7) inset;
+  }
 }

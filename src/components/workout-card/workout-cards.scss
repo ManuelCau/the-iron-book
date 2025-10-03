@@ -5,25 +5,31 @@
 .workout-preview {
   display: flex;
   justify-content: center;
-  background: linear-gradient(rgba(9, 43, 74, 0.592) 10%, #062c4e89 100%);
-  box-shadow: 10px 10px 10px rgba(50, 101, 183, 0.757) inset;
+  background: linear-gradient(rgb(35, 87, 136) 10%, #062c4e89 100%);
+  box-shadow: 10px 10px 10px rgba(34, 75, 139, 0.236) inset,
+    0 8px 16px rgba(0, 0, 0, 0.664);
   border-radius: 20px;
   margin-top: 20px;
   width: 80%;
   padding: 10px;
+
   p {
     font-weight: bold;
     color: $primary-color;
   }
 }
+.workout-preview:active {
+  transform: scale(0.5);
+  transition: ease-in 0.5s;
+}
 
 .workout-card {
-  background: linear-gradient(rgba(9, 43, 74, 0.592) 10%, #062c4e89 100%);
-  box-shadow: 20px 20px 20px 20px rgba(50, 101, 183, 0.757) inset;
+  background: linear-gradient(rgb(35, 87, 136) 10%, #062c4e89 100%);
+  box-shadow: 10px 5px 20px 20px rgba(50, 101, 183, 0.275) inset;
   border-radius: 20px;
   margin-top: 20px;
   margin-bottom: 40px;
-  width: 80%;
+  width: 100%;
   padding: 10px;
 
   .exercise-form {
@@ -135,5 +141,11 @@
   }
   .completed-workout-button {
     background-color: $positive-action;
+    box-shadow: 5px 5px 20px rgba(3, 174, 0, 0.521) inset;
+  }
+  .completed-workout-button:active {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+      0px 5px 10px rgba(0, 0, 5, 0.521),
+      0 0 15px 5px rgba(10, 101, 0, 0.7) inset;
   }
 }

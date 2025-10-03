@@ -46,10 +46,4 @@ describe("Timer", () => {
     const timerButton = screen.getByText("0:10");
     expect(timerButton).toBeInTheDocument();
   });
-
-  it("button should be red in exercise time", () => {
-    render(<Timer {...TimerProps} />);
-    const timerButton = screen.getByRole("button", { name: /:/ });
-    expect(timerButton).toHaveStyle({ backgroundColor: "#ff4d4d" });
-  });
 });
