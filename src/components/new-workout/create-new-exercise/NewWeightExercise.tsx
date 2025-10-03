@@ -20,7 +20,7 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
   const [weightExercise, setWeightExercise] = useState<Exercise>({
     id: Date.now(),
     name: "",
-    sets: 0,
+    sets: 1,
     reps: 0,
     rest: 0,
   });
@@ -79,6 +79,7 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
             type="number"
             name="sets"
             placeholder="0"
+            min={0}
             value={weightExercise.sets === 0 ? "" : weightExercise.sets}
             onChange={handleExerciseChange}
           />
@@ -89,6 +90,7 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
             type="number"
             name="reps"
             placeholder="0"
+            min={0}
             value={weightExercise.reps === 0 ? "" : weightExercise.reps}
             onChange={handleExerciseChange}
           />

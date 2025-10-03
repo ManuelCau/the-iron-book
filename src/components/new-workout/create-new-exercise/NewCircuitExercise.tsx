@@ -20,7 +20,7 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
   const [circuitExercise, setCircuitExercise] = useState<Exercise>({
     id: Date.now(),
     name: "",
-    sets: 0,
+    sets: 1,
     time: 0,
     rest: 0,
   });
@@ -71,12 +71,12 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
             onChange={handleCircuitExerciseChange}
           />
         </div>
-
         <div className="form-inputs">
           <label>Sets</label>
           <input
             type="number"
             name="sets"
+            min={0}
             placeholder="0"
             value={circuitExercise.sets === 0 ? "" : circuitExercise.sets}
             onChange={handleCircuitExerciseChange}
@@ -91,6 +91,7 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
               <input
                 type="number"
                 placeholder="0"
+                min={0}
                 value={min === 0 ? "" : min}
                 onChange={(e) => setMin(Number(e.target.value))}
               />
@@ -100,6 +101,7 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
               <input
                 type="number"
                 placeholder="0"
+                min={0}
                 value={sec === 0 ? "" : sec}
                 onChange={(e) => setSec(Number(e.target.value))}
               />
@@ -115,6 +117,7 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
               <input
                 type="number"
                 placeholder="0"
+                min={0}
                 value={
                   Math.floor(circuitExercise.rest / 60) === 0
                     ? ""
@@ -134,6 +137,7 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
               <input
                 type="number"
                 placeholder="0"
+                min={0}
                 value={
                   circuitExercise.rest % 60 === 0
                     ? ""

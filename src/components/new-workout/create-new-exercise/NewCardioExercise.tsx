@@ -20,7 +20,7 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
   const [cardioExercise, setCardioExercise] = useState<Exercise>({
     id: Date.now(),
     name: "",
-    sets: 0,
+    sets: 1,
     time: 0,
     rest: 0,
   });
@@ -77,7 +77,8 @@ export function NewCardioExercise({ workout, setWorkout, prevStep }: Props) {
           <input
             type="number"
             name="sets"
-            placeholder="0"
+            min={0}
+            placeholder="1"
             value={cardioExercise.sets === 0 ? "" : cardioExercise.sets}
             onChange={handleCardioExerciseChange}
           />
