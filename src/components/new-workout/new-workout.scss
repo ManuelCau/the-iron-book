@@ -57,12 +57,17 @@
     padding: 10px;
     background-color: $negative-action;
     border-radius: 10px;
-    border-color: transparent;
+    border: none;
     margin: 5px;
-
     font-weight: bold;
     color: white;
     font-family: $app-type;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+      0px 5px 10px rgba(0, 0, 5, 0.801);
+    &:active {
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+        0px 5px 10px rgba(0, 0, 5, 0.521), 0 0 15px 5px rgba(0, 0, 0, 0.7) inset;
+    }
   }
   .save-btn {
     padding: 10px;

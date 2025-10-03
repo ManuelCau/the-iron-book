@@ -52,7 +52,8 @@
     padding: 20px;
     width: 100%;
     background-color: $positive-action;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.557) inset,
+      0px 5px 10px rgba(0, 0, 5, 0.701);
     border-radius: 15px;
     border-color: transparent;
     border: none;
@@ -60,5 +61,11 @@
     font-weight: bold;
     font-size: 20px;
     color: $secondary-color;
+
+    &:active {
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+        0px 5px 10px rgba(0, 0, 5, 0.521),
+        0 0 15px 5px rgba(0, 0, 0, 0.453) inset;
+    }
   }
 }

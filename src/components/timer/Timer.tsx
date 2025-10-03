@@ -96,14 +96,6 @@ export function Timer({
   const minutes = Math.floor(timeLeft! / 60);
   const seconds = timeLeft! % 60;
 
-  const buttonStyle = {
-    backgroundColor: time
-      ? isExercisePhase
-        ? "#ff4d4d"
-        : "#4dff88"
-      : "#4dff88",
-  };
-
   useEffect(() => {
     if (timeLeft === 0 && isRunning) {
       const sound = new Audio(
@@ -116,13 +108,17 @@ export function Timer({
     }
   }, [timeLeft, isRunning, isExercisePhase]);
 
+  let buttonClass = "timer-button neutral";
+
+  if (isRunning) {
+    buttonClass = isExercisePhase
+      ? "timer-button exercise"
+      : "timer-button rest";
+  }
+
   return (
     <div>
-      <button
-        className="timer-button"
-        onClick={handleStartStop}
-        style={buttonStyle}
-      >
+      <button className={buttonClass} onClick={handleStartStop}>
         {minutes}:{seconds.toString().padStart(2, "0")}
       </button>
       <button className="reset-button" onClick={handleResetButton}>

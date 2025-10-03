@@ -35,24 +35,38 @@
     .back-button {
       display: flex;
       border-radius: 10px;
-      border-color: transparent;
+      border: none;
       background-color: $negative-action;
       color: white;
       font-family: $app-type;
       align-items: center;
       justify-content: center;
       padding: 15px 20px;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+        0px 5px 10px rgba(0, 0, 5, 0.801);
+      &:active {
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+          0px 5px 10px rgba(0, 0, 5, 0.521),
+          0 0 15px 5px rgba(0, 0, 0, 0.7) inset;
+      }
     }
 
     .next-button {
       display: flex;
       border-radius: 10px;
-      border-color: transparent;
+      border: none;
       background-color: $primary-color;
       font-family: $app-type;
       align-items: center;
       justify-content: center;
       padding: 5px 15px;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+        0px 5px 10px rgba(0, 0, 5, 0.801);
+      &:active {
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+          0px 5px 10px rgba(0, 0, 5, 0.521),
+          0 0 15px 5px rgba(0, 0, 0, 0.7) inset;
+      }
     }
   }
 }

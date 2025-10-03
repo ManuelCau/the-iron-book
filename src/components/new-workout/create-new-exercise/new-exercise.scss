@@ -32,7 +32,7 @@
           padding: 10px;
           border-radius: 15px;
           width: 50%;
-          background-color: rgba(228, 220, 220, 0.766);
+          background-color: rgb(228, 220, 220);
         }
       }
     }
@@ -50,7 +50,7 @@
     }
 
     input {
-      background-color: rgba(228, 220, 220, 0.766);
+      background-color: rgb(228, 220, 220);
       padding: 10px;
       border-radius: 15px;
       width: 100%;
@@ -66,19 +66,33 @@
       padding: 10px;
       background-color: $primary-color;
       border-radius: 10px;
-      border-color: transparent;
+      border: none;
       font-weight: bold;
       color: $secondary-color;
       font-family: $app-type;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+        0px 5px 10px rgba(0, 0, 5, 0.801);
+      &:active {
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+          0px 5px 10px rgba(0, 0, 5, 0.521),
+          0 0 15px 5px rgba(0, 0, 0, 0.7) inset;
+      }
     }
     .back-btn {
       padding: 10px;
       background-color: $negative-action;
       border-radius: 10px;
-      border-color: transparent;
+      border: none;
       font-weight: bold;
       color: white;
       font-family: $app-type;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+        0px 5px 10px rgba(0, 0, 5, 0.801);
+      &:active {
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.521) inset,
+          0px 5px 10px rgba(0, 0, 5, 0.521),
+          0 0 15px 5px rgba(0, 0, 0, 0.7) inset;
+      }
     }
   }
 }
