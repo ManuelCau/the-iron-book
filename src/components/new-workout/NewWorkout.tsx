@@ -55,8 +55,8 @@ export function NewWorkout({
     setShowWorkouts(true);
   }
 
-  const steps: Record<Step, JSX.Element> = {
-    name: (
+  const screens: Record<Step, () => JSX.Element> = {
+    name: () => (
       <WorkoutName
         workout={workout}
         handleWorkoutChange={(e) =>
@@ -66,7 +66,7 @@ export function NewWorkout({
         handleBack={handleBack}
       />
     ),
-    type: (
+    type: () => (
       <div>
         <SelectWorkoutType
           workout={workout}
@@ -85,28 +85,28 @@ export function NewWorkout({
         )}
       </div>
     ),
-    weight: (
+    weight: () => (
       <NewWeightExercise
         workout={workout}
         setWorkout={setWorkout}
         prevStep={() => setStep("type")}
       />
     ),
-    cardio: (
+    cardio: () => (
       <NewCardioExercise
         workout={workout}
         setWorkout={setWorkout}
         prevStep={() => setStep("type")}
       />
     ),
-    circuit: (
+    circuit: () => (
       <NewCircuitExercise
         workout={workout}
         setWorkout={setWorkout}
         prevStep={() => setStep("type")}
       />
     ),
-    summary: (
+    summary: () => (
       <div className="workout-list">
         <p>{workout.title}</p>
         <p>Summary:</p>
@@ -116,10 +116,12 @@ export function NewWorkout({
     ),
   };
 
+  const currentStep = screens[step];
+
   return (
     <div className="new-workout-card">
       <p>NEW WORKOUT</p>
-      {steps[step]}
+      {currentStep()}
     </div>
   );
 }
