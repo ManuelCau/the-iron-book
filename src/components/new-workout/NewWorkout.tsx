@@ -86,25 +86,40 @@ export function NewWorkout({
       </div>
     ),
     weight: () => (
-      <NewWeightExercise
-        workout={workout}
-        setWorkout={setWorkout}
-        prevStep={() => setStep("type")}
-      />
+      <div>
+        <NewWeightExercise
+          workout={workout}
+          setWorkout={setWorkout}
+          prevStep={() => setStep("type")}
+        />
+        {workout.exercises.length > 0 && (
+          <ExerciseList exercises={workout.exercises} setWorkout={setWorkout} />
+        )}
+      </div>
     ),
     cardio: () => (
-      <NewCardioExercise
-        workout={workout}
-        setWorkout={setWorkout}
-        prevStep={() => setStep("type")}
-      />
+      <div>
+        <NewCardioExercise
+          workout={workout}
+          setWorkout={setWorkout}
+          prevStep={() => setStep("type")}
+        />
+        {workout.exercises.length > 0 && (
+          <ExerciseList exercises={workout.exercises} setWorkout={setWorkout} />
+        )}
+      </div>
     ),
     circuit: () => (
-      <NewCircuitExercise
-        workout={workout}
-        setWorkout={setWorkout}
-        prevStep={() => setStep("type")}
-      />
+      <div>
+        <NewCircuitExercise
+          workout={workout}
+          setWorkout={setWorkout}
+          prevStep={() => setStep("type")}
+        />
+        {workout.exercises.length > 0 && (
+          <ExerciseList exercises={workout.exercises} setWorkout={setWorkout} />
+        )}
+      </div>
     ),
     summary: () => (
       <div className="workout-list">
