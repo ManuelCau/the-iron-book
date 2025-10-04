@@ -18,18 +18,51 @@ export function ExerciseList({ exercises, setWorkout }: Props) {
     }));
     setExerciseToDelete(null);
   }
+
+  function moveExercise(index: number, direction: "up" | "down") {
+    setWorkout((prev) => {
+      const updated = [...prev.exercises];
+      if (direction === "up" && index > 0) {
+        [updated[index - 1], updated[index]] = [
+          updated[index],
+          updated[index - 1],
+        ];
+      }
+      if (direction === "down" && index < updated.length - 1) {
+        [updated[index + 1], updated[index]] = [
+          updated[index],
+          updated[index + 1],
+        ];
+      }
+      return { ...prev, exercises: updated };
+    });
+  }
   return (
     <div className="workout-list">
       <ul>
-        {exercises.map((ex) => (
+        {exercises.map((ex, index) => (
           <li key={ex.id}>
             {ex.name} – {ExerciseFormat(ex)}
-            <button
-              onClick={() => setExerciseToDelete(ex.id)}
-              className="remove-btn"
-            >
-              ❌
-            </button>
+            <div className="exercise-actions">
+              <button
+                onClick={() => moveExercise(index, "up")}
+                disabled={index === 0}
+              >
+                ⬆️
+              </button>
+              <button
+                onClick={() => moveExercise(index, "down")}
+                disabled={index === exercises.length - 1}
+              >
+                ⬇️
+              </button>
+              <button
+                onClick={() => setExerciseToDelete(ex.id)}
+                className="remove-btn"
+              >
+                ❌
+              </button>
+            </div>
           </li>
         ))}
       </ul>
