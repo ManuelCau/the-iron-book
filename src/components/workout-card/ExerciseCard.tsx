@@ -8,6 +8,7 @@ import left from "../../assets/SVG/buttons/chevron-left.svg";
 import returnBack from "../../assets/SVG/buttons/arrow-hook-down-left.svg";
 import check from "../../assets/SVG/buttons/checked.svg";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+import { PopUp } from "../pop-up/PopUp";
 
 type Props = {
   exerciseData: Exercise[];
@@ -15,6 +16,8 @@ type Props = {
   workoutId: number;
   onBack: () => void;
   onSubmitEnd: () => void;
+  onConfirm: () => void;
+  onCancel: (() => void) | undefined;
 };
 
 export function ExerciseCard({
@@ -22,7 +25,7 @@ export function ExerciseCard({
   setExerciseData,
   workoutId,
   onBack,
-  onSubmitEnd,
+  onConfirm,
 }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [view, setView] = useState<"exercise" | "history">("exercise");
@@ -31,6 +34,7 @@ export function ExerciseCard({
     []
   );
   const [isChanged, setIsChanged] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   if (!exerciseData || exerciseData.length === 0) return null;
   const currentExercise = exerciseData[currentIndex];
@@ -94,8 +98,7 @@ export function ExerciseCard({
       date: today,
     }));
     setHistory([...history, ...newRecords]);
-    alert("Workout completed!");
-    onSubmitEnd();
+    setShowAlert(true);
   }
 
   return (
@@ -222,6 +225,18 @@ export function ExerciseCard({
           >
             <img src={check} alt="checked" />
           </button>
+        )}
+        {showAlert && (
+          <PopUp
+            message="Workout completed!"
+            onConfirm={() => {
+              setShowAlert(false);
+              onConfirm();
+            }}
+            onCancel={() => {
+              setShowAlert(false);
+            }}
+          />
         )}
       </div>
     </div>

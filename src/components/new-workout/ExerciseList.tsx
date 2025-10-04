@@ -1,5 +1,7 @@
+import { useState } from "react";
 import type { Workout } from "../../types";
 import { ExerciseFormat } from "./ExerciseFormat";
+import { PopUp } from "../pop-up/PopUp";
 
 type Props = {
   exercises: Workout["exercises"];
@@ -8,11 +10,13 @@ type Props = {
 };
 
 export function ExerciseList({ exercises, setWorkout }: Props) {
+  const [exerciseToDelete, setExerciseToDelete] = useState<number | null>(null);
   function handleRemoveExercise(id: number) {
     setWorkout((prev) => ({
       ...prev,
       exercises: prev.exercises.filter((ex) => ex.id !== id),
     }));
+    setExerciseToDelete(null);
   }
   return (
     <div className="workout-list">
@@ -21,7 +25,7 @@ export function ExerciseList({ exercises, setWorkout }: Props) {
           <li key={ex.id}>
             {ex.name} – {ExerciseFormat(ex)}
             <button
-              onClick={() => handleRemoveExercise(ex.id)}
+              onClick={() => setExerciseToDelete(ex.id)}
               className="remove-btn"
             >
               ❌
@@ -29,6 +33,13 @@ export function ExerciseList({ exercises, setWorkout }: Props) {
           </li>
         ))}
       </ul>
+      {exerciseToDelete !== null && (
+        <PopUp
+          message="Delete exercise?"
+          onConfirm={() => handleRemoveExercise(exerciseToDelete)}
+          onCancel={() => setExerciseToDelete(null)}
+        />
+      )}
     </div>
   );
 }

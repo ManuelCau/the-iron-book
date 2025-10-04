@@ -1,0 +1,52 @@
+@use "../../style/mixin.scss" as *;
+@use "../../style/font.scss" as *;
+@use "../../style/colors.scss" as *;
+
+.pop-up-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.5s ease forwards;
+  .pop-up {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-items: center;
+    position: relative;
+    background-color: #ffffffde;
+    padding: 10px;
+    border-radius: 20px;
+    border: solid 2px $negative-action;
+    p {
+      font-size: 15px;
+      margin: 10px;
+      color: $secondary-color;
+      font-weight: bold;
+    }
+    .pop-up-buttons {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      button {
+        padding: 8px;
+        font-family: $app-type;
+        color: rgb(255, 255, 255);
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border: none;
+      }
+      .confirm-btn {
+        background-color: $positive-action;
+      }
+      .cancel-btn {
+        background-color: $negative-action;
+      }
+    }
+  }
+}

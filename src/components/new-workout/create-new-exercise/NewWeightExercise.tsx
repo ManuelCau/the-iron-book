@@ -12,9 +12,17 @@ type Props = {
   workout: Workout;
   setWorkout: Dispatch<SetStateAction<Workout>>;
   prevStep: () => void;
+  onSuccess: () => void;
+  onError: () => void;
 };
 
-export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
+export function NewWeightExercise({
+  workout,
+  setWorkout,
+  prevStep,
+  onSuccess,
+  onError,
+}: Props) {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
   const [weightExercise, setWeightExercise] = useState<Exercise>({
@@ -45,7 +53,7 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
       weightExercise.reps! <= 0 ||
       weightExercise.rest < 0
     ) {
-      alert("Please fill all fields correctly!");
+      onError?.();
       return;
     }
 
@@ -57,7 +65,7 @@ export function NewWeightExercise({ workout, setWorkout, prevStep }: Props) {
     setWeightExercise({ id: Date.now(), name: "", sets: 0, reps: 0, rest: 0 });
     setMin(0);
     setSec(0);
-    window.confirm("Exercise added!");
+    onSuccess?.();
   }
 
   return (

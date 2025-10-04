@@ -25,13 +25,8 @@ export function MainPage() {
   }
 
   function deleteWorkout(id: number) {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this workout?"
-    );
-    if (confirmDelete) {
-      setWorkoutList(workoutList.filter((w) => w.id !== id));
-      if (openWorkoutId === id) setOpenWorkoutId(null);
-    }
+    setWorkoutList(workoutList.filter((w) => w.id !== id));
+    if (openWorkoutId === id) setOpenWorkoutId(null);
   }
 
   return (

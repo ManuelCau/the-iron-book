@@ -38,7 +38,10 @@ export function WorkoutCard({
         <ResumeCard
           workout={workout}
           exerciseData={exerciseData}
-          onDelete={onDelete}
+          onConfirm={() => {
+            setOpenWorkoutId(null);
+          }}
+          deleteWorkout={onDelete}
           setShowExCard={setShowExCard}
           setShowExResume={() => setOpenWorkoutId(null)}
         />
@@ -46,6 +49,11 @@ export function WorkoutCard({
         <ExerciseCard
           exerciseData={exerciseData}
           setExerciseData={setExerciseData}
+          onConfirm={() => {
+            setShowExCard(false);
+            setOpenWorkoutId(null);
+          }}
+          onCancel={undefined}
           workoutId={workout.id}
           onBack={() => setShowExCard(false)}
           onSubmitEnd={() => {

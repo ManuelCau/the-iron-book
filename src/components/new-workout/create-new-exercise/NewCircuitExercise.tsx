@@ -12,9 +12,17 @@ type Props = {
   workout: Workout;
   setWorkout: Dispatch<SetStateAction<Workout>>;
   prevStep: () => void;
+  onSuccess: () => void;
+  onError: () => void;
 };
 
-export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
+export function NewCircuitExercise({
+  workout,
+  setWorkout,
+  prevStep,
+  onSuccess,
+  onError,
+}: Props) {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
   const [circuitExercise, setCircuitExercise] = useState<Exercise>({
@@ -45,7 +53,7 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
       circuitExercise.time! <= 0 ||
       circuitExercise.rest! < 0
     ) {
-      alert("Please fill all fields correctly!");
+      onError?.();
       return;
     }
 
@@ -55,7 +63,7 @@ export function NewCircuitExercise({ workout, setWorkout, prevStep }: Props) {
     });
 
     setCircuitExercise({ id: Date.now(), name: "", sets: 0, time: 0, rest: 0 });
-    window.confirm("Exercise added!");
+    onSuccess?.();
   }
 
   return (
