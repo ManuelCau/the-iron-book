@@ -1,11 +1,15 @@
 import type { Workout } from "../../../types";
 import next from "../../../assets/SVG/buttons/chevron-right.svg";
+import { PopUp } from "../../pop-up/PopUp";
 
 type Props = {
   workout: Workout;
   handleWorkoutChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   nextStep: () => void;
   handleBack: () => void;
+  showConfirm: boolean;
+  onConfirm: () => void;
+  onCancel: (() => void) | undefined;
 };
 
 export function WorkoutName({
@@ -13,6 +17,9 @@ export function WorkoutName({
   handleWorkoutChange,
   nextStep,
   handleBack,
+  showConfirm,
+  onConfirm,
+  onCancel,
 }: Props) {
   return (
     <>
@@ -34,6 +41,13 @@ export function WorkoutName({
           <button className="next-button" onClick={nextStep}>
             Next <img src={next} alt="next" />
           </button>
+          {showConfirm && (
+            <PopUp
+              message="Are you sure you want to cancel this workout?"
+              onConfirm={onConfirm}
+              onCancel={onCancel}
+            />
+          )}
         </div>
       </div>
     </>

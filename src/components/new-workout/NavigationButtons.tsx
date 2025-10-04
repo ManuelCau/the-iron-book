@@ -2,9 +2,15 @@ type Props = {
   onBack: () => void;
   onNext?: () => void;
   onSave?: () => void;
+  showSave?: boolean;
 };
 
-export function NavigationButtons({ onBack, onNext, onSave }: Props) {
+export function NavigationButtons({
+  onBack,
+  onNext,
+  onSave,
+  showSave = true,
+}: Props) {
   return (
     <div className="navigation-buttons">
       <button onClick={onBack} className="go-back-btn">
@@ -15,7 +21,7 @@ export function NavigationButtons({ onBack, onNext, onSave }: Props) {
           Preview
         </button>
       )}
-      {onSave && (
+      {showSave && onSave && (
         <button onClick={onSave} className="save-btn">
           Save Workout
         </button>
