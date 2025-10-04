@@ -13,7 +13,6 @@ type Props = {
   onAddedWorkout: (workout: Workout) => void;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   setShowWorkouts: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowSavePopUp: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type Step = "name" | "type" | "weight" | "cardio" | "circuit" | "summary";
