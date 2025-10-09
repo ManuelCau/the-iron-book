@@ -121,14 +121,14 @@ export function ExerciseCard({
           <div className="ex-info">
             {" "}
             <p>
-              {currentExercise.name}{" "}
-              {currentExercise.time
-                ? `${currentExercise.sets} x ${String(
-                    Math.floor(currentExercise.time / 60)
+              {currentExercise.name} <br></br>
+              {currentExercise.reps
+                ? `Sets: ${currentExercise.sets} x ${currentExercise.reps} reps`
+                : `Sets: ${currentExercise.sets} - ${String(
+                    Math.floor(currentExercise.time! / 60)
                   ).padStart(2, "0")} : ${String(
-                    currentExercise.time % 60
-                  ).padStart(2, "0")} min`
-                : `${currentExercise.sets} x ${currentExercise.reps}`}
+                    currentExercise.time! % 60
+                  ).padStart(2, "0")} min`}
             </p>
           </div>
 
@@ -140,7 +140,7 @@ export function ExerciseCard({
                   type="number"
                   name="kg"
                   min={0}
-                  value={currentExercise.kg === 0 ? "" : currentExercise.kg}
+                  value={currentExercise.kg}
                   placeholder="0"
                   onChange={(e) => handleExerciseData(e, currentExercise.id)}
                 />
