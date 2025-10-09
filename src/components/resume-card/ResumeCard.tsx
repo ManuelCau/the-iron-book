@@ -1,7 +1,6 @@
 import type { Exercise, Workout } from "../../types";
 import trash from "../../assets/SVG/buttons/trash.svg";
 import returnBack from "../../assets/SVG/buttons/arrow-hook-down-left.svg";
-import { ExerciseFormat } from "../new-workout/ExerciseFormat";
 import { useState } from "react";
 import { PopUp } from "../pop-up/PopUp";
 
@@ -46,7 +45,7 @@ export function ResumeCard({
       <ul>
         {exerciseData.map((ex) => (
           <li key={ex.id}>
-            {ex.name} – {ExerciseFormat(ex)}
+            {ex.name} – Sets: {ex.sets}
           </li>
         ))}
       </ul>
