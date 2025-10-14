@@ -1,4 +1,4 @@
-import { useState, type JSX } from "react";
+import { useState, type JSX, useEffect } from "react";
 import type { Workout } from "../../types";
 import { NewWeightExercise } from "./create-new-exercise/NewWeightExercise";
 import { NewCardioExercise } from "./create-new-exercise/NewCardioExercise";
@@ -13,6 +13,7 @@ type Props = {
   onAddedWorkout: (workout: Workout) => void;
   setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   setShowWorkouts: React.Dispatch<React.SetStateAction<boolean>>;
+  editingWorkout?: Workout | null; // 👈 workout da modificare (se presente)
 };
 
 type Step = "name" | "type" | "weight" | "cardio" | "circuit" | "summary";
@@ -21,17 +22,24 @@ export function NewWorkout({
   onAddedWorkout,
   setShowForm,
   setShowWorkouts,
+  editingWorkout,
 }: Props) {
-  const [workout, setWorkout] = useState<Workout>({
-    id: Date.now(),
-    title: "",
-    exercises: [],
-  });
+  // 🔹 Se editingWorkout è passato, usa quello come stato iniziale
+  const [workout, setWorkout] = useState<Workout>(
+    editingWorkout ?? { id: Date.now(), title: "", exercises: [] }
+  );
+
   const [showConfirm, setShowConfirm] = useState(false);
   const [showSavePopUp, setShowSavePopUp] = useState(false);
   const [step, setStep] = useState<Step>("name");
   const [showFormPopup, setShowFormPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
+
+  // 🔹 Se l’utente seleziona un workout da modificare dopo il mount,
+  // aggiorna lo stato con i dati esistenti
+  useEffect(() => {
+    if (editingWorkout) setWorkout(editingWorkout);
+  }, [editingWorkout]);
 
   const prevStep: Record<Step, Step | null> = {
     name: null,
@@ -44,15 +52,19 @@ export function NewWorkout({
 
   function handleBack() {
     if (prevStep[step]) setStep(prevStep[step]!);
-    else {
-      setShowConfirm(true);
-    }
+    else setShowConfirm(true);
   }
 
+  // 🔹 Salvataggio: se in modalità modifica, sovrascrive lo stesso id
   function handleSubmit() {
-    onAddedWorkout(workout);
-    setWorkout({ id: Date.now(), title: "", exercises: [] });
-    setStep("name");
+    onAddedWorkout(workout); // la logica di update o creazione è gestita a monte
+
+    if (!editingWorkout) {
+      // Se era un nuovo workout, resetta tutto
+      setWorkout({ id: Date.now(), title: "", exercises: [] });
+      setStep("name");
+    }
+
     setShowForm(false);
     setShowWorkouts(true);
   }
@@ -99,7 +111,6 @@ export function NewWorkout({
           }
           showSave={false}
         />
-
         {workout.exercises.length > 0 && (
           <ExerciseList exercises={workout.exercises} setWorkout={setWorkout} />
         )}
@@ -150,7 +161,7 @@ export function NewWorkout({
     summary: () => (
       <div className="workout-list">
         <p>{workout.title}</p>
-        <p>Summary:</p>
+        <p>{editingWorkout ? "Edit Workout" : "Summary:"}</p>
         <ExerciseList exercises={workout.exercises} setWorkout={setWorkout} />
         <NavigationButtons
           onBack={handleBack}
@@ -158,7 +169,11 @@ export function NewWorkout({
         />
         {showSavePopUp && (
           <PopUp
-            message="Do you want to save this workout?"
+            message={
+              editingWorkout
+                ? "Save changes to this workout?"
+                : "Do you want to save this workout?"
+            }
             onConfirm={() => {
               handleSubmit();
               setShowSavePopUp(false);
@@ -174,7 +189,7 @@ export function NewWorkout({
 
   return (
     <div className="new-workout-card">
-      <p>NEW WORKOUT</p>
+      <p>{editingWorkout ? "EDIT WORKOUT" : "NEW WORKOUT"}</p>
       {currentStep()}
       {showFormPopup && (
         <PopUp
