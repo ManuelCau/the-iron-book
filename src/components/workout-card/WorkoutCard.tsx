@@ -20,7 +20,17 @@ export function WorkoutCard({
 }: Props) {
   const [showExCard, setShowExCard] = useState(false);
   const [exerciseData, setExerciseData] = useState<Exercise[]>(
-    workout.exercises.map((ex) => ({ ...ex }))
+    workout.exercises.map((ex) => {
+      if (ex.reps !== undefined) {
+        return {
+          ...ex,
+          kg: ex.kg ?? 0,
+          reps: ex.reps ?? 0,
+        };
+      } else {
+        return { ...ex };
+      }
+    })
   );
 
   if (!isOpen) {
