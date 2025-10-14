@@ -36,7 +36,6 @@ export function ExerciseCard({
   const [isChanged, setIsChanged] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  if (!exerciseData || exerciseData.length === 0) return null;
   const currentExercise = exerciseData[currentIndex];
 
   useEffect(() => {
@@ -60,6 +59,8 @@ export function ExerciseCard({
       }
     }
   }, [currentExercise, history, setHistory, workoutId]);
+
+  if (!exerciseData || exerciseData.length === 0) return null;
 
   const handleExerciseData = (e: ChangeEvent<HTMLInputElement>, id: number) => {
     const { name, value } = e.target;

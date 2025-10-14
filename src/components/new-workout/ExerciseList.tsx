@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { Workout } from "../../types";
-import { ExerciseFormat } from "./ExerciseFormat";
 import { PopUp } from "../pop-up/PopUp";
 
 type Props = {
@@ -42,7 +41,14 @@ export function ExerciseList({ exercises, setWorkout }: Props) {
       <ul>
         {exercises.map((ex, index) => (
           <li key={ex.id}>
-            {ex.name} – {ExerciseFormat(ex)}
+            {ex.reps
+              ? `Sets: ${ex.sets} x ${ex.reps} reps`
+              : `Sets: ${ex.sets} - ${String(
+                  Math.floor(ex.time! / 60)
+                ).padStart(2, "0")} : ${String(ex.time! % 60).padStart(
+                  2,
+                  "0"
+                )} min`}
             <div className="exercise-actions">
               <button
                 onClick={() => moveExercise(index, "up")}
