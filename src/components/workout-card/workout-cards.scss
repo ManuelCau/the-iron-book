@@ -4,6 +4,7 @@
 
 .workout-preview {
   display: flex;
+  align-items: center;
   justify-content: center;
   background: linear-gradient(rgba(35, 87, 136, 0.479) 10%, #062c4e68 100%);
   box-shadow: 10px 10px 10px rgba(19, 42, 78, 0.432) inset,
@@ -12,10 +13,27 @@
   margin-top: 20px;
   width: 80%;
   padding: 10px;
+  position: relative;
 
   p {
     font-weight: bold;
     color: $primary-color;
+  }
+
+  .card-actions {
+    display: flex;
+
+    button {
+      position: absolute;
+      right: 15px;
+      background: transparent;
+      align-self: center;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: white;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
   }
 }
 .workout-preview:active {
@@ -67,6 +85,9 @@
   }
 
   .workout-title {
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
     margin: 10px 0 20px;
     display: flex;
 

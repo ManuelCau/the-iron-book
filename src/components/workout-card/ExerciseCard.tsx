@@ -141,7 +141,7 @@ export function ExerciseCard({
                   type="number"
                   name="kg"
                   min={0}
-                  value={currentExercise.kg}
+                  value={currentExercise.kg === 0 ? "" : currentExercise.kg}
                   placeholder="0"
                   onChange={(e) => handleExerciseData(e, currentExercise.id)}
                 />

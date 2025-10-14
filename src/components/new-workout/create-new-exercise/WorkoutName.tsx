@@ -43,7 +43,7 @@ export function WorkoutName({
           </button>
           {showConfirm && (
             <PopUp
-              message="Are you sure you want to cancel this workout?"
+              message="Are you sure you want to go back?"
               onConfirm={onConfirm}
               onCancel={onCancel}
             />

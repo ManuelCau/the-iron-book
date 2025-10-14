@@ -14,19 +14,32 @@ export function MainPage() {
   const [showNewWorkoutForm, setShowNewWorkoutForm] = useState(false);
   const [showWorkouts, setShowWorkouts] = useState(true);
   const [openWorkoutId, setOpenWorkoutId] = useState<number | null>(null);
+  const [editingWorkout, setEditingWorkout] = useState<Workout | null>(null);
 
   function handleAddButton() {
+    setEditingWorkout(null);
     setShowNewWorkoutForm(true);
     setShowWorkouts(false);
   }
 
-  function addWorkout(newWorkout: Workout) {
-    setWorkoutList([...workoutList, newWorkout]);
+  function addOrUpdateWorkout(newWorkout: Workout) {
+    setWorkoutList((prev) => {
+      const exists = prev.some((w) => w.id === newWorkout.id);
+      return exists
+        ? prev.map((w) => (w.id === newWorkout.id ? newWorkout : w))
+        : [...prev, newWorkout];
+    });
   }
 
   function deleteWorkout(id: number) {
     setWorkoutList(workoutList.filter((w) => w.id !== id));
     if (openWorkoutId === id) setOpenWorkoutId(null);
+  }
+
+  function handleEditWorkout(workout: Workout) {
+    setEditingWorkout(workout);
+    setShowNewWorkoutForm(true);
+    setShowWorkouts(false);
   }
 
   return (
@@ -52,6 +65,7 @@ export function MainPage() {
           <WorkoutCard
             key={w.id}
             workout={w}
+            onEdit={handleEditWorkout}
             onDelete={deleteWorkout}
             isOpen={openWorkoutId === w.id}
             setOpenWorkoutId={setOpenWorkoutId}
@@ -60,9 +74,10 @@ export function MainPage() {
 
       {showNewWorkoutForm ? (
         <NewWorkout
-          onAddedWorkout={addWorkout}
+          onAddedWorkout={addOrUpdateWorkout}
           setShowForm={setShowNewWorkoutForm}
           setShowWorkouts={setShowWorkouts}
+          editingWorkout={editingWorkout}
         />
       ) : (
         <div className="new-workout-btn">

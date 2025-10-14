@@ -2,23 +2,35 @@ import { useState } from "react";
 import type { Workout, Exercise } from "../../types";
 import { ResumeCard } from "../resume-card/ResumeCard";
 import { ExerciseCard } from "./ExerciseCard";
-
+import edit from "../../assets/SVG/buttons/edit-pencil.svg";
 type Props = {
   workout: Workout;
   onDelete: (id: number) => void;
   isOpen: boolean;
   setOpenWorkoutId: (id: number | null) => void;
+  onEdit: (workout: Workout) => void;
 };
 
 export function WorkoutCard({
   workout,
   onDelete,
+  onEdit,
   isOpen,
   setOpenWorkoutId,
 }: Props) {
   const [showExCard, setShowExCard] = useState(false);
   const [exerciseData, setExerciseData] = useState<Exercise[]>(
-    workout.exercises.map((ex) => ({ ...ex }))
+    workout.exercises.map((ex) => {
+      if (ex.reps !== undefined) {
+        return {
+          ...ex,
+          kg: ex.kg ?? 0,
+          reps: ex.reps ?? 0,
+        };
+      } else {
+        return { ...ex };
+      }
+    })
   );
 
   if (!isOpen) {
@@ -27,7 +39,20 @@ export function WorkoutCard({
         className="workout-preview"
         onClick={() => setOpenWorkoutId(workout.id)}
       >
-        <p>{workout.title}</p>
+        <div>
+          <p>{workout.title}</p>
+        </div>
+
+        <div className="card-actions">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(workout);
+            }}
+          >
+            <img src={edit} alt="edit" />
+          </button>
+        </div>
       </div>
     );
   }
