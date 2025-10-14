@@ -27,11 +27,14 @@ export function History({ exerciseName, history }: Props) {
         <ul>
           {latestHistoryPerDate.map((h, i) => (
             <li key={i}>
-              {h.kg
-                ? `${h.kg ?? 0}kg × ${h.reps ?? 0} reps (${h.sets} sets) — ${
-                    h.date
-                  }`
-                : `Time: ${h.time} min × ${h.sets} — ${h.date}`}
+              {h.reps
+                ? `${h.date} - Sets: ${h.sets} x ${h.reps} reps - ${h.kg} kg `
+                : `${h.date} - Sets: ${h.sets} - ${String(
+                    Math.floor(h.time! / 60)
+                  ).padStart(2, "0")} : ${String(h.time! % 60).padStart(
+                    2,
+                    "0"
+                  )} min`}
             </li>
           ))}
         </ul>
