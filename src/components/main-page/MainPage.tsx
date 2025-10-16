@@ -42,17 +42,20 @@ export function MainPage() {
     setShowWorkouts(false);
   }
 
+  const isWorkoutOpen = openWorkoutId !== null;
+
   return (
     <div className="mainPage">
       <div>
         <img className="logo" src={logo} alt="logo" />
       </div>
 
-      {workoutList.length >= 1 && !showNewWorkoutForm ? (
+      {workoutList.length >= 1 && !showNewWorkoutForm && !isWorkoutOpen ? (
         <p>My Workouts</p>
       ) : (
         workoutList.length === 0 &&
-        !showNewWorkoutForm && (
+        !showNewWorkoutForm &&
+        !isWorkoutOpen && (
           <p>
             Empty for now… <br />
             full of progress tomorrow. Start today with your first workout!
@@ -61,16 +64,18 @@ export function MainPage() {
       )}
 
       {showWorkouts &&
-        workoutList.map((w) => (
-          <WorkoutCard
-            key={w.id}
-            workout={w}
-            onEdit={handleEditWorkout}
-            onDelete={deleteWorkout}
-            isOpen={openWorkoutId === w.id}
-            setOpenWorkoutId={setOpenWorkoutId}
-          />
-        ))}
+        workoutList
+          .filter((w) => !isWorkoutOpen || w.id === openWorkoutId)
+          .map((w) => (
+            <WorkoutCard
+              key={w.id}
+              workout={w}
+              onEdit={handleEditWorkout}
+              onDelete={deleteWorkout}
+              isOpen={openWorkoutId === w.id}
+              setOpenWorkoutId={setOpenWorkoutId}
+            />
+          ))}
 
       {showNewWorkoutForm ? (
         <NewWorkout
@@ -80,10 +85,12 @@ export function MainPage() {
           editingWorkout={editingWorkout}
         />
       ) : (
-        <div className="new-workout-btn">
-          <label>Add new</label>
-          <img src={addButton} onClick={handleAddButton} alt="add new" />
-        </div>
+        !isWorkoutOpen && (
+          <div className="new-workout-btn">
+            <label>Add new</label>
+            <img src={addButton} onClick={handleAddButton} alt="add new" />
+          </div>
+        )
       )}
     </div>
   );
